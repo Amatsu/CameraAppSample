@@ -14,4 +14,6 @@
 @property (nonatomic,strong) AVCaptureSession* session;
 @property (nonatomic,strong) IBOutlet UIImageView* imageView;
 
+- (IBAction)imageOutput:(id)sender;
+
 @end

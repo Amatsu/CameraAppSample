@@ -156,6 +156,11 @@
 				CLASSPREFIX = Birds;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Amatsu;
+				TargetAttributes = {
+					CDC74BEF1844B4B300898681 = {
+						DevelopmentTeam = X92ZZC4PR4;
+					};
+				};
 			};
 			buildConfigurationList = CDC74BEB1844B4B300898681 /* Build configuration list for PBXProject "AVFoundationCameraSample" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -281,10 +286,13 @@
 		CDC74C141844B4B300898681 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AVFoundationCameraSample/AVFoundationCameraSample-Prefix.pch";
 				INFOPLIST_FILE = "AVFoundationCameraSample/AVFoundationCameraSample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -292,10 +300,13 @@
 		CDC74C151844B4B300898681 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AVFoundationCameraSample/AVFoundationCameraSample-Prefix.pch";
 				INFOPLIST_FILE = "AVFoundationCameraSample/AVFoundationCameraSample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -319,6 +330,7 @@
 				CDC74C151844B4B300898681 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

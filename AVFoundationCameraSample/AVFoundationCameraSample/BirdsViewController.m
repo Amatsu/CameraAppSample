@@ -77,6 +77,7 @@
     
     // イメージバッファのロック
     CVPixelBufferLockBaseAddress(buffer, 0);
+    
     // イメージバッファ情報の取得
     uint8_t*    base;
     size_t      width, height, bytesPerRow;
@@ -112,6 +113,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)imageOutput:(id)sender {
+    
 }
 
 @end
