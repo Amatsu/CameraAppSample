@@ -207,6 +207,7 @@
     [self.previewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
     
     [self setupImageCapture];
+    [self setupVideoCapture];
     
     [captureSession startRunning];
     
@@ -221,6 +222,29 @@
         if([captureSession canAddOutput:imageOutput])
         {
             [captureSession addOutput:imageOutput];
+            return YES;
+        }
+    }
+    return NO;
+}
+//ビデオキャプチャの初期化
+//設定後:captureOutputが呼ばれる
+-(BOOL)setupVideoCapture{
+    
+    
+    //////////////////////////////////
+    //    ビデオ出力デバイスの設定
+    //////////////////////////////////
+	NSDictionary *rgbOutputSettings = @{(id)kCVPixelBufferPixelFormatTypeKey: @(kCMPixelFormat_32BGRA)};
+    videoOutput = AVCaptureVideoDataOutput.new;
+	[videoOutput setVideoSettings:rgbOutputSettings];
+	[videoOutput setAlwaysDiscardsLateVideoFrames:YES];     //  NOだとコマ落ちしないが重い処理には向かない
+  	videoOutputQueue = dispatch_queue_create("VideoData Output Queue", DISPATCH_QUEUE_SERIAL);
+	[videoOutput setSampleBufferDelegate:self queue:videoOutputQueue];
+    
+	if(videoOutput){
+        if ([captureSession canAddOutput:videoOutput]){
+            [captureSession addOutput:videoOutput];
             return YES;
         }
     }
@@ -277,7 +301,6 @@
     if(self.videoImage == nil)
         return nil;
     
-    
     UIImage* image = nil;
     UIDeviceOrientation orientation = _videoOrientaion;
     BOOL isMirrored = self.isUsingFrontCamera;
@@ -300,6 +323,7 @@
     
     return image;
 }
+
 + (UIImage*)rotateImage:(UIImage*)img angle:(int)angle
 {
     CGImageRef      imgRef = [img CGImage];
@@ -337,7 +361,9 @@
     return result;
 }
 
-//
+/////////////////////////////////////////////////////////////////////////////////
+//      ビデオキャプチャ時、 新しいフレームが書き込まれた際に通知を受けるデリゲートメソッド
+/////////////////////////////////////////////////////////////////////////////////
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
     @autoreleasepool {

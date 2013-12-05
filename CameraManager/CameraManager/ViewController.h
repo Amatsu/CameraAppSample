@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CameraManager.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<CameraManagerDelegate>
+
+@property CameraManager* cameraManager;
+@property (weak, nonatomic) IBOutlet UIImageView *photoPreview;
+@property (weak, nonatomic) IBOutlet UIImageView *prtSampleView;
+
+- (IBAction)prtScreen:(id)sender;
 
 @end

@@ -26,6 +26,7 @@
 		CD9B30BD184AAC43002E47AF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9B30BC184AAC43002E47AF /* CoreMedia.framework */; };
 		CD9B30BF184AAC56002E47AF /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9B30BE184AAC56002E47AF /* CoreVideo.framework */; };
 		CD9B30C1184AAC62002E47AF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9B30C0184AAC62002E47AF /* AVFoundation.framework */; };
+		CD9B30C71850A615002E47AF /* PrintScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9B30C61850A615002E47AF /* PrintScreenViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,8 @@
 		CD9B30BC184AAC43002E47AF /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		CD9B30BE184AAC56002E47AF /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		CD9B30C0184AAC62002E47AF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		CD9B30C51850A615002E47AF /* PrintScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrintScreenViewController.h; sourceTree = "<group>"; };
+		CD9B30C61850A615002E47AF /* PrintScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrintScreenViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +134,8 @@
 		CD9B3088184AA0D8002E47AF /* CameraManager */ = {
 			isa = PBXGroup;
 			children = (
+				CD9B30C51850A615002E47AF /* PrintScreenViewController.h */,
+				CD9B30C61850A615002E47AF /* PrintScreenViewController.m */,
 				CD9B3091184AA0D8002E47AF /* AppDelegate.h */,
 				CD9B3092184AA0D8002E47AF /* AppDelegate.m */,
 				CD9B3094184AA0D8002E47AF /* Main.storyboard */,
@@ -273,6 +278,7 @@
 				CD9B3099184AA0D8002E47AF /* ViewController.m in Sources */,
 				CD9B3093184AA0D8002E47AF /* AppDelegate.m in Sources */,
 				CD9B30B9184AA488002E47AF /* CameraManager.m in Sources */,
+				CD9B30C71850A615002E47AF /* PrintScreenViewController.m in Sources */,
 				CD9B308F184AA0D8002E47AF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,6 +488,7 @@
 				CD9B30B3184AA0D8002E47AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CD9B30B4184AA0D8002E47AF /* Build configuration list for PBXNativeTarget "CameraManagerTests" */ = {
 			isa = XCConfigurationList;
@@ -490,6 +497,7 @@
 				CD9B30B6184AA0D8002E47AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
