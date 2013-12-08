@@ -15,6 +15,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *photoPreview;
 @property (weak, nonatomic) IBOutlet UIImageView *prtSampleView;
 
+//フォーカスをあわせる時のフレーム
+@property (nonatomic, strong) CALayer* foucusSetFrameView;
+
 - (IBAction)prtScreen:(id)sender;
 
 @end

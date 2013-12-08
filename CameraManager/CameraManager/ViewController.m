@@ -16,6 +16,9 @@
 
 @implementation ViewController
 
+//フォーカスをあわせるときのフレームサイズ
+#define INDICATOR_RECT_SIZE 50.0
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -23,6 +26,18 @@
     
     self.cameraManager = CameraManager.new;
     [self.cameraManager setPreview:self.photoPreview];
+    
+    //フォーカス調整フレームを追加
+    self.foucusSetFrameView = [CALayer layer];
+    self.foucusSetFrameView.borderColor = [[UIColor whiteColor] CGColor];
+    self.foucusSetFrameView.borderWidth = 1.0;
+    self.foucusSetFrameView.frame = CGRectMake(self.view.bounds.size.width/2.0 - INDICATOR_RECT_SIZE/2.0,
+                                               self.view.bounds.size.height/2.0 - INDICATOR_RECT_SIZE/2.0,
+                                               INDICATOR_RECT_SIZE,
+                                               INDICATOR_RECT_SIZE);
+    self.foucusSetFrameView.hidden = YES;
+    [self.photoPreview.layer addSublayer:self.foucusSetFrameView];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -30,6 +45,55 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//タッチされたときに呼ばれるメソッド
+- (void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
+{
+    //タッチイベントを取り出す
+    UITouch *touch = [touches anyObject];
+    //タッチイベントから座標を取得
+    CGPoint point = [touch locationInView:self.view];
+    
+    //1) 0.0〜1.0 に正規化した値
+    //(2) ランドスケープ（横向き/ホームボタン右）の時の左上を原点とする座標系
+    CGSize viewSize = self.cameraManager.previewLayer.bounds.size;
+    CGPoint pointOfInterest = CGPointMake(point.y / viewSize.height,
+                                          1.0 - point.x / viewSize.width);
+    
+    self.foucusSetFrameView.frame = CGRectMake(point.x - INDICATOR_RECT_SIZE/2.0,
+                                               point.y - INDICATOR_RECT_SIZE/2.0,
+                                               INDICATOR_RECT_SIZE,
+                                               INDICATOR_RECT_SIZE);
+    self.foucusSetFrameView.hidden = NO;
+    
+    //点滅アニメーション
+    [self blinkImage:self.foucusSetFrameView];
+    
+    //カメラのフォーカスを合わせる
+    [self.cameraManager autoFocusAtPoint:pointOfInterest];
+
+}
+
+//点滅アニメーション
+- (void)blinkImage:(CALayer *)target {
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+    animation.duration = 1.0f;
+    animation.repeatCount = HUGE_VAL;
+    animation.values = [[NSArray alloc] initWithObjects:
+                        [NSNumber numberWithFloat:1.0f],
+                        [NSNumber numberWithFloat:0.0f],
+                        [NSNumber numberWithFloat:1.0f],
+                        nil];
+    animation.repeatCount = 1;
+    animation.delegate = self;
+    [target addAnimation:animation forKey:@"blink"];
+
+    
+}
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    self.foucusSetFrameView.hidden = YES;
+}
+
 
 - (IBAction)prtScreen:(id)sender {
     

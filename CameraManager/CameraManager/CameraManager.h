@@ -81,6 +81,7 @@
 - (void)autoFocusAtPoint:(CGPoint)point;
 - (void)continuousFocusAtPoint:(CGPoint)point;
 
+
 //------------------------------
 //カメラ撮影
 //------------------------------

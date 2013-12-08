@@ -122,6 +122,12 @@
 
 #pragma mark - フォーカス制御
 
+/*
+ AVCaptureFocusModeLocked 焦点距離ロックモード
+ AVCaptureFocusModeAutoFocus 焦点がシーンの中心から外れても焦点維持
+ AVCaptureFocusModeContinuousAutoFocus 必要に応じてオートフォーカスになるモード
+ */
+
 - (void) autoFocusAtPoint:(CGPoint)point
 {
     AVCaptureDevice *device = videoInput.device;
@@ -138,7 +144,6 @@
 - (void) continuousFocusAtPoint:(CGPoint)point
 {
     AVCaptureDevice *device = videoInput.device;
-	
     if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
 		NSError *error;
 		if ([device lockForConfiguration:&error]) {
@@ -148,6 +153,7 @@
 		}
 	}
 }
+
 
 #pragma mark -　初期化
 
