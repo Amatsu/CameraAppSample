@@ -38,21 +38,28 @@
     self.foucusSetFrameView.hidden = YES;
     [self.photoPreview.layer addSublayer:self.foucusSetFrameView];
     
+    //タップジェスチャーを追加
+    self.photoPreview.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget: self action: @selector(didTapGesture:)];
+    //<UIGestureRecognizerDelegate>
+    //tapGesture.delegate = self;
+    [self.photoPreview addGestureRecognizer: tapGesture];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+//{
+//    // gestureをセットしたview以外がタッチされた場合はgestureを無視
+//    if (touch.view != self.photoPreview)
+//    {
+//        return false;
+//    }
+//    return true;
+//}
 
-//タッチされたときに呼ばれるメソッド
-- (void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
+- (void)didTapGesture:(UITapGestureRecognizer*)tgr
 {
-    //タッチイベントを取り出す
-    UITouch *touch = [touches anyObject];
     //タッチイベントから座標を取得
-    CGPoint point = [touch locationInView:self.view];
+    CGPoint point = [tgr locationInView:tgr.view];
     
     //1) 0.0〜1.0 に正規化した値
     //(2) ランドスケープ（横向き/ホームボタン右）の時の左上を原点とする座標系
@@ -71,7 +78,12 @@
     
     //カメラのフォーカスを合わせる
     [self.cameraManager autoFocusAtPoint:pointOfInterest];
+}
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 //点滅アニメーション
