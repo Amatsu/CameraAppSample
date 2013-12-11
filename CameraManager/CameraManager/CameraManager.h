@@ -40,6 +40,7 @@
 
 @property (nonatomic,assign) id <CameraManagerDelegate> delegate;
 
+- (AVCaptureDeviceInput *) getInputDevice;
 
 //--------------------------------
 //プレビュー制御
@@ -81,6 +82,10 @@
 - (void)autoFocusAtPoint:(CGPoint)point;
 - (void)continuousFocusAtPoint:(CGPoint)point;
 
+//------------------------------
+//露光制御
+//------------------------------
+- (void)autoExposureAtPoint:(CGPoint)point;
 
 //------------------------------
 //カメラ撮影

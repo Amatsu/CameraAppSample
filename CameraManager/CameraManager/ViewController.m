@@ -10,11 +10,14 @@
 #import "PrintScreenViewController.h"
 
 
-@interface ViewController ()
+@interface ViewController ()<UIGestureRecognizerDelegate>
 
 @end
 
 @implementation ViewController
+
+float beginGestureScale;
+float effectiveScale;
 
 //フォーカスをあわせるときのフレームサイズ
 #define INDICATOR_RECT_SIZE 50.0
@@ -38,12 +41,42 @@
     self.foucusSetFrameView.hidden = YES;
     [self.photoPreview.layer addSublayer:self.foucusSetFrameView];
     
+    //露光調整プロパティ監視
+    [self.cameraManager.getInputDevice addObserver:self
+             forKeyPath:@"adjustingExposure"
+                options:NSKeyValueObservingOptionNew
+                context:nil];
+    
     //タップジェスチャーを追加
     self.photoPreview.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget: self action: @selector(didTapGesture:)];
     //<UIGestureRecognizerDelegate>
     //tapGesture.delegate = self;
     [self.photoPreview addGestureRecognizer: tapGesture];
+    
+    // 初期のスケールを設定する
+    effectiveScale = 1.0;
+    // ピンチのジェスチャーを登録する
+    UIGestureRecognizer *recognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchFrom:)];
+    //<UIGestureRecognizerDelegate>
+    recognizer.delegate = self;
+    [self.photoPreview addGestureRecognizer:recognizer];
+    
+}
+
+//露光関連
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    AVCaptureDevice *device = self.cameraManager.getInputDevice.device;
+    if ([keyPath isEqual:@"adjustingExposure"]) {
+        if ([[change objectForKey:NSKeyValueChangeNewKey] boolValue] == NO) {
+            NSError *error = nil;
+            if ([device lockForConfiguration:&error]) {
+                [device setExposureMode:AVCaptureExposureModeLocked];
+                [device unlockForConfiguration];
+            }
+        }
+    }
 }
 
 //- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
@@ -78,6 +111,25 @@
     
     //カメラのフォーカスを合わせる
     [self.cameraManager autoFocusAtPoint:pointOfInterest];
+    [self.cameraManager autoExposureAtPoint:pointOfInterest];
+}
+
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if ([gestureRecognizer isKindOfClass:[UIPinchGestureRecognizer class]]) {
+        // 適用されているスケールを覚えておく
+        beginGestureScale = effectiveScale;
+    }
+    return YES;
+}
+- (void)handlePinchFrom:(UIPinchGestureRecognizer *)recognizer
+{
+    // 新しく適用するスケールを計算する (適用されているスケール x 新しくピンチしたスケール)
+    effectiveScale = beginGestureScale * recognizer.scale;
+    
+    // スケールをビューに適用する
+    [self.photoPreview.layer setAffineTransform:CGAffineTransformMakeScale(effectiveScale, effectiveScale)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,15 +161,7 @@
 
 - (IBAction)prtScreen:(id)sender {
     
-//    //StoryboardからViewControllerを呼び出し
-//    PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PrintScreenViewController"];
-//    [self presentViewController:prtScrView animated:YES completion:nil];
-    
-    //self.prtSampleView.image = self.cameraManager.rotatedVideoImage;
-    
-    //StoryboardからViewControllerを呼び出し
-    
-    //シャッター音あり
+//シャッター音あり
 //    [self.cameraManager takePhoto:^(UIImage *image, NSError *error) {
 //        //self.prtSampleView.image = image;
 //        PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PrintScreenViewController"];
@@ -125,8 +169,11 @@
 //        [self presentViewController:prtScrView animated:YES completion:nil];
 //    }];
     
-    //シャッター音なし
+    
+    //StoryboardからViewControllerを呼び出し
     PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PrintScreenViewController"];
+    
+    //シャッター音なし
     prtScrView.printScreenImage = self.cameraManager.rotatedVideoImage;
     [self presentViewController:prtScrView animated:YES completion:nil];
 

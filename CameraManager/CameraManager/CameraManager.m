@@ -35,17 +35,19 @@
 
 @implementation CameraManager
 
+- (AVCaptureDeviceInput *) getInputDevice{
+    return videoInput;
+}
+
 #pragma mark -　カメラ切り替え
-- (void)useFrontCamera:(BOOL)yesno
-{
+- (void)useFrontCamera:(BOOL)yesno{
     if(yesno == YES)
         [self enableCamera:AVCaptureDevicePositionFront];
     else
         [self enableCamera:AVCaptureDevicePositionBack];
 }
 
-- (void)flipCamera
-{
+- (void)flipCamera{
     if(self.isUsingFrontCamera)
         [self useFrontCamera:NO];
     else
@@ -53,8 +55,7 @@
 }
     
 //カメラを有効化
-- (void)enableCamera:(AVCaptureDevicePosition)desiredPosition
-{
+- (void)enableCamera:(AVCaptureDevicePosition)desiredPosition{
     [captureSession stopRunning];
     
     for(AVCaptureDevice *d in [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo])
@@ -75,8 +76,7 @@
     [captureSession startRunning];
 }
 
-- (BOOL)isUsingFrontCamera
-{
+- (BOOL)isUsingFrontCamera{
     if(videoInput.device.position == AVCaptureDevicePositionFront)
         return YES;
     else
@@ -84,8 +84,7 @@
 }
 
 #pragma mark - ライト制御
-- (void)light:(BOOL)yesno
-{
+- (void)light:(BOOL)yesno{
     if(![self.backCameraDevice hasTorch])
         return;
     
@@ -104,8 +103,7 @@
     [self.backCameraDevice unlockForConfiguration];
 }
 
-- (BOOL)isLightOn
-{
+- (BOOL)isLightOn{
     if(![self.backCameraDevice hasTorch])
         return YES;
     if(self.backCameraDevice.isTorchActive)
@@ -128,8 +126,7 @@
  AVCaptureFocusModeContinuousAutoFocus 必要に応じてオートフォーカスになるモード
  */
 
-- (void) autoFocusAtPoint:(CGPoint)point
-{
+- (void) autoFocusAtPoint:(CGPoint)point{
     AVCaptureDevice *device = videoInput.device;
     if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
         NSError *error;
@@ -141,8 +138,7 @@
 }
 
 
-- (void) continuousFocusAtPoint:(CGPoint)point
-{
+- (void) continuousFocusAtPoint:(CGPoint)point{
     AVCaptureDevice *device = videoInput.device;
     if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
 		NSError *error;
@@ -154,12 +150,24 @@
 	}
 }
 
+#pragma mark - 露出制御
+- (void) autoExposureAtPoint:(CGPoint)point
+{
+    AVCaptureDevice *device = videoInput.device;
+    if( [device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+        NSError *error;
+        if ([device lockForConfiguration:&error]) {
+            device.exposurePointOfInterest = point;
+            device.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+            [device unlockForConfiguration];
+        }
+    }	
+
+}
 
 #pragma mark -　初期化
-
 //初期化
-- (id)init
-{
+- (id)init{
     if(super.init)
     {
         [self setupAvCapture:AVCaptureSessionPreset1280x720];
@@ -169,8 +177,7 @@
 }
 
 //解像度を指定して初期化
-- (id)initWithPreset:(NSString *)preset
-{
+- (id)initWithPreset:(NSString *)preset{
     if(super.init)
     {
         [self setupAvCapture:preset];
@@ -180,20 +187,17 @@
 }
 
 //プレビューレイヤをビューに設定
-- (void)setPreview:(UIView *)view
-{
+- (void)setPreview:(UIView *)view{
     self.previewLayer.frame = view.bounds;
     [view.layer addSublayer:self.previewLayer];
 }
 
-- (void)setupAvCapture:(NSString*)preset
-{
+- (void)setupAvCapture:(NSString*)preset{
     //カメラの一覧を取得しカメラデバイスを保存
     self.backCameraDevice = nil;
     self.frontCameraDevice = nil;
     NSArray* cameraArray = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
-    for(AVCaptureDevice* camera in cameraArray)
-    {
+    for(AVCaptureDevice* camera in cameraArray){
         if(camera.position == AVCaptureDevicePositionBack)
             self.backCameraDevice = camera;
         if(camera.position == AVCaptureDevicePositionFront)
@@ -236,11 +240,8 @@
 //ビデオキャプチャの初期化
 //設定後:captureOutputが呼ばれる
 -(BOOL)setupVideoCapture{
-    
-    
-    //////////////////////////////////
-    //    ビデオ出力デバイスの設定
-    //////////////////////////////////
+
+    //ビデオ出力デバイスの設定
 	NSDictionary *rgbOutputSettings = @{(id)kCVPixelBufferPixelFormatTypeKey: @(kCMPixelFormat_32BGRA)};
     videoOutput = AVCaptureVideoDataOutput.new;
 	[videoOutput setVideoSettings:rgbOutputSettings];
@@ -273,31 +274,26 @@
 }
 
 #pragma  mark - 撮影
-//      写真撮影
+//写真撮影
 -(void)takePhoto:(takePhotoBlock) block{
     
     AVCaptureConnection* connection = [imageOutput connectionWithMediaType:AVMediaTypeVideo];
     
-    //      画像の向きを調整する
+    //画像の向きを調整する
     if(connection.isVideoOrientationSupported){
         connection.videoOrientation = UIDevice.currentDevice.orientation;
     }
     
-    //      UIImage化した画像を通知する
+    //UIImage化した画像を通知する
     [imageOutput captureStillImageAsynchronouslyFromConnection:connection
                                              completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-                                                 
                                                  if(imageDataSampleBuffer == nil){
                                                      block(nil,error);
                                                      return;
                                                  }
-                                                 
                                                  NSData *data = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
                                                  UIImage *image = [UIImage imageWithData:data];
-                                                 
-                                                 
                                                  block(image,error);
-                                                 
                                              }];
     
 }
@@ -330,8 +326,7 @@
     return image;
 }
 
-+ (UIImage*)rotateImage:(UIImage*)img angle:(int)angle
-{
++ (UIImage*)rotateImage:(UIImage*)img angle:(int)angle{
     CGImageRef      imgRef = [img CGImage];
     CGContextRef    context;
     
@@ -367,29 +362,25 @@
     return result;
 }
 
-/////////////////////////////////////////////////////////////////////////////////
-//      ビデオキャプチャ時、 新しいフレームが書き込まれた際に通知を受けるデリゲートメソッド
-/////////////////////////////////////////////////////////////////////////////////
-- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
-{
+//ビデオキャプチャ時、 新しいフレームが書き込まれた際に通知を受けるデリゲートメソッド
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection{
     @autoreleasepool {
         
-        //     キャプチャ画像からUIImageを作成する
+        //キャプチャ画像からUIImageを作成する
         CGImageRef cgImage = [CameraManager imageFromSampleBuffer:sampleBuffer];
         UIImage* captureImage = [UIImage imageWithCGImage:cgImage];
         CGImageRelease(cgImage);
         
-        ////////////////////////////////////////////
-        //      メインスレッドでの処理
-        ////////////////////////////////////////////
+        //メインスレッドでの処理
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             self.videoImage = captureImage;
             self.videoOrientaion = UIDevice.currentDevice.orientation;
             
-            //      デリゲートの存在確認後画面更新
+            // デリゲートの存在確認後画面更新
             if ([self.delegate respondsToSelector:@selector(videoFrameUpdate:from:)]) {
                 [self.delegate videoFrameUpdate:self.videoImage.CGImage from:self];
             }
+            
         });
         
     }
@@ -397,18 +388,15 @@
 
 #pragma mark - ユーティリティ
 
-- (NSUInteger) cameraCount
-{
+- (NSUInteger) cameraCount{
     return [[AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo] count];
 }
 
-- (NSUInteger) micCount
-{
+- (NSUInteger) micCount{
     return [[AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio] count];
 }
 
-- (AVCaptureDevice *) cameraWithPosition:(AVCaptureDevicePosition) position
-{
+- (AVCaptureDevice *) cameraWithPosition:(AVCaptureDevicePosition) position{
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
     for (AVCaptureDevice *device in devices) {
         if ([device position] == position) {
@@ -418,18 +406,15 @@
     return nil;
 }
 
-- (AVCaptureDevice *) frontFacingCamera
-{
+- (AVCaptureDevice *) frontFacingCamera{
     return [self cameraWithPosition:AVCaptureDevicePositionFront];
 }
 
-- (AVCaptureDevice *) backFacingCamera
-{
+- (AVCaptureDevice *) backFacingCamera{
     return [self cameraWithPosition:AVCaptureDevicePositionBack];
 }
 
-- (AVCaptureDevice *) audioDevice
-{
+- (AVCaptureDevice *) audioDevice{
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio];
     if ([devices count] > 0) {
         return [devices objectAtIndex:0];
@@ -440,8 +425,7 @@
 #pragma mark - クラス・メソッド
 
 //SampleBufferをCGImageRefに変換する
-+ (CGImageRef) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer
-{
++ (CGImageRef) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer{
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     CVPixelBufferLockBaseAddress(imageBuffer,0);        //バッファをロック
     
