@@ -28,4 +28,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)back:(id)sender {
+    //StoryboardからViewControllerを呼び出し
+    PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"MainViewController"];
+    [self presentViewController:prtScrView animated:YES completion:nil];
+}
 @end

@@ -13,4 +13,6 @@
 @property (weak, nonatomic) UIImage* printScreenImage;
 @property (weak, nonatomic) IBOutlet UIImageView *printScreenImageView;
 
+- (IBAction)back:(id)sender;
+
 @end

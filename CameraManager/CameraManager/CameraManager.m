@@ -24,6 +24,8 @@
     AVCaptureVideoDataOutput* videoOutput;
     //ビデオ出力用スレッド
     dispatch_queue_t videoOutputQueue;
+    //拡大倍率
+    CGFloat effectiveScale;
 }
 
 - (AVCaptureDevice *) cameraWithPosition:(AVCaptureDevicePosition)position;
@@ -150,9 +152,24 @@
 	}
 }
 
+#pragma mark - ズーム制御
+- (void) setScale:(CGFloat)scale{
+    effectiveScale = scale;
+    if (effectiveScale < 1.0)
+        effectiveScale = 1.0;
+    CGFloat maxScaleAndCropFactor = [[imageOutput connectionWithMediaType:AVMediaTypeVideo] videoMaxScaleAndCropFactor];
+    if (effectiveScale > maxScaleAndCropFactor)
+        effectiveScale = maxScaleAndCropFactor;
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:.025];
+    //プレビューレイヤに拡大倍率を適用
+    [self.previewLayer setAffineTransform:CGAffineTransformMakeScale(effectiveScale, effectiveScale)];
+    [CATransaction commit];
+    
+}
+
 #pragma mark - 露出制御
-- (void) autoExposureAtPoint:(CGPoint)point
-{
+- (void) autoExposureAtPoint:(CGPoint)point{
     AVCaptureDevice *device = videoInput.device;
     if( [device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
         NSError *error;
@@ -284,6 +301,9 @@
         connection.videoOrientation = UIDevice.currentDevice.orientation;
     }
     
+    //拡大倍率を適用
+    [connection setVideoScaleAndCropFactor:effectiveScale];
+    
     //UIImage化した画像を通知する
     [imageOutput captureStillImageAsynchronouslyFromConnection:connection
                                              completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
@@ -295,6 +315,7 @@
                                                  UIImage *image = [UIImage imageWithData:data];
                                                  block(image,error);
                                              }];
+    
     
 }
 //  デバイスの向きに合わせたビデオイメージを作成
@@ -365,6 +386,9 @@
 //ビデオキャプチャ時、 新しいフレームが書き込まれた際に通知を受けるデリゲートメソッド
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection{
     @autoreleasepool {
+        
+        //スケールの適用
+        //[connection setVideoScaleAndCropFactor:effectiveScale];
         
         //キャプチャ画像からUIImageを作成する
         CGImageRef cgImage = [CameraManager imageFromSampleBuffer:sampleBuffer];

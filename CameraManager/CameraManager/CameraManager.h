@@ -99,6 +99,11 @@ typedef void (^takePhotoBlock)(UIImage *image, NSError *error);
 @property UIImage* videoImage;
 @property UIDeviceOrientation videoOrientaion;
 
+//------------------------------
+//ズーム制御
+//------------------------------
+-(void)setScale:(CGFloat)scale;
+
 //静止画取得
 - (UIImage*)rotatedVideoImage;
 

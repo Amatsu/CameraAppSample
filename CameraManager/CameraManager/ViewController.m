@@ -114,7 +114,7 @@ float effectiveScale;
     [self.cameraManager autoExposureAtPoint:pointOfInterest];
 }
 
-
+//ピンチアクション中のデリゲート
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
     if ([gestureRecognizer isKindOfClass:[UIPinchGestureRecognizer class]]) {
@@ -123,13 +123,13 @@ float effectiveScale;
     }
     return YES;
 }
+
+//ピンチイベント（ズーム制御）
 - (void)handlePinchFrom:(UIPinchGestureRecognizer *)recognizer
 {
     // 新しく適用するスケールを計算する (適用されているスケール x 新しくピンチしたスケール)
     effectiveScale = beginGestureScale * recognizer.scale;
-    
-    // スケールをビューに適用する
-    [self.photoPreview.layer setAffineTransform:CGAffineTransformMakeScale(effectiveScale, effectiveScale)];
+    [self.cameraManager setScale:effectiveScale];
 }
 
 - (void)didReceiveMemoryWarning
@@ -161,13 +161,13 @@ float effectiveScale;
 
 - (IBAction)prtScreen:(id)sender {
     
-//シャッター音あり
-//    [self.cameraManager takePhoto:^(UIImage *image, NSError *error) {
-//        //self.prtSampleView.image = image;
-//        PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PrintScreenViewController"];
-//        prtScrView.printScreenImage = image;
-//        [self presentViewController:prtScrView animated:YES completion:nil];
-//    }];
+    //シャッター音あり
+    //[self.cameraManager takePhoto:^(UIImage *image, NSError *error) {
+    //    //self.prtSampleView.image = image;
+    //    PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PrintScreenViewController"];
+    //    prtScrView.printScreenImage = image;
+    //    [self presentViewController:prtScrView animated:YES completion:nil];
+    //}];
     
     
     //StoryboardからViewControllerを呼び出し
