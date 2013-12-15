@@ -64,6 +64,12 @@ float effectiveScale;
     
 }
 
+//タブバーコントローラーの遷移イベント
+- (void) didSelect:(PhotoListTabBarController *)tabBarController {
+    [tabBarController showTabBar:NO];
+}
+
+
 //露光関連
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {

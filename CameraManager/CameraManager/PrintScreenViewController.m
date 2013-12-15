@@ -50,6 +50,13 @@
                                    @selector(savingImageIsFinished:didFinishSavingWithError:contextInfo:), nil);
 }
 
+//一覧表示
+- (IBAction)showPhotoList:(id)sender {
+    //StoryboardからViewControllerを呼び出し
+    PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PhotoListTabController"];
+    [self presentViewController:prtScrView animated:YES completion:nil];
+}
+
 //UUIDを利用しランダムのファイル名を用意
 - (NSString*) stringWithUUID {
     CFUUIDRef uuidObj = CFUUIDCreate(nil);//create a new UUID
@@ -72,5 +79,6 @@
                                           cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
 }
+
 
 @end

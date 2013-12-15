@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CameraManager.h"
+#import "PhotoListTabBarController.h"
 
-@interface ViewController : UIViewController<CameraManagerDelegate>
+@interface ViewController : UIViewController<CameraManagerDelegate,PhotoListTabBarControllerDelegate>
 
 @property CameraManager* cameraManager;
 @property (weak, nonatomic) IBOutlet UIImageView *photoPreview;

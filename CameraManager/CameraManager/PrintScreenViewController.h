@@ -15,5 +15,6 @@
 
 - (IBAction)back:(id)sender;
 - (IBAction)saveImage:(id)sender;
+- (IBAction)showPhotoList:(id)sender;
 
 @end
