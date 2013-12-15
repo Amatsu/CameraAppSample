@@ -159,19 +159,18 @@ float effectiveScale;
 }
 
 
+//撮影
 - (IBAction)prtScreen:(id)sender {
+    
+    //StoryboardからViewControllerを呼び出し
+    PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PrintScreenViewController"];
     
     //シャッター音あり
     //[self.cameraManager takePhoto:^(UIImage *image, NSError *error) {
     //    //self.prtSampleView.image = image;
-    //    PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PrintScreenViewController"];
     //    prtScrView.printScreenImage = image;
     //    [self presentViewController:prtScrView animated:YES completion:nil];
     //}];
-    
-    
-    //StoryboardからViewControllerを呼び出し
-    PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PrintScreenViewController"];
     
     //シャッター音なし
     prtScrView.printScreenImage = self.cameraManager.rotatedVideoImage;

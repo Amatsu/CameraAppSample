@@ -27,6 +27,8 @@
 		CD9B30BF184AAC56002E47AF /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9B30BE184AAC56002E47AF /* CoreVideo.framework */; };
 		CD9B30C1184AAC62002E47AF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9B30C0184AAC62002E47AF /* AVFoundation.framework */; };
 		CD9B30C71850A615002E47AF /* PrintScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9B30C61850A615002E47AF /* PrintScreenViewController.m */; };
+		CD9B30CC185BDF2F002E47AF /* icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD9B30CB185BDF2F002E47AF /* icon-60@2x.png */; };
+		CD9B30CF185BE1E6002E47AF /* PhotoListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9B30CE185BE1E6002E47AF /* PhotoListTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,9 @@
 		CD9B30C0184AAC62002E47AF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		CD9B30C51850A615002E47AF /* PrintScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrintScreenViewController.h; sourceTree = "<group>"; };
 		CD9B30C61850A615002E47AF /* PrintScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrintScreenViewController.m; sourceTree = "<group>"; };
+		CD9B30CB185BDF2F002E47AF /* icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-60@2x.png"; path = "../../../../Dropbox/おきろく画像/icon-60@2x.png"; sourceTree = "<group>"; };
+		CD9B30CD185BE1E6002E47AF /* PhotoListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoListTableViewController.h; sourceTree = "<group>"; };
+		CD9B30CE185BE1E6002E47AF /* PhotoListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoListTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +150,8 @@
 				CD9B3089184AA0D8002E47AF /* Supporting Files */,
 				CD9B30B7184AA488002E47AF /* CameraManager.h */,
 				CD9B30B8184AA488002E47AF /* CameraManager.m */,
+				CD9B30CD185BE1E6002E47AF /* PhotoListTableViewController.h */,
+				CD9B30CE185BE1E6002E47AF /* PhotoListTableViewController.m */,
 			);
 			path = CameraManager;
 			sourceTree = "<group>";
@@ -152,6 +159,7 @@
 		CD9B3089184AA0D8002E47AF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CD9B30C8185B1385002E47AF /* icon */,
 				CD9B308A184AA0D8002E47AF /* CameraManager-Info.plist */,
 				CD9B308B184AA0D8002E47AF /* InfoPlist.strings */,
 				CD9B308E184AA0D8002E47AF /* main.m */,
@@ -176,6 +184,14 @@
 				CD9B30AA184AA0D8002E47AF /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CD9B30C8185B1385002E47AF /* icon */ = {
+			isa = PBXGroup;
+			children = (
+				CD9B30CB185BDF2F002E47AF /* icon-60@2x.png */,
+			);
+			name = icon;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,6 +270,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD9B30CC185BDF2F002E47AF /* icon-60@2x.png in Resources */,
 				CD9B309B184AA0D8002E47AF /* Images.xcassets in Resources */,
 				CD9B308D184AA0D8002E47AF /* InfoPlist.strings in Resources */,
 				CD9B3096184AA0D8002E47AF /* Main.storyboard in Resources */,
@@ -279,6 +296,7 @@
 				CD9B3093184AA0D8002E47AF /* AppDelegate.m in Sources */,
 				CD9B30B9184AA488002E47AF /* CameraManager.m in Sources */,
 				CD9B30C71850A615002E47AF /* PrintScreenViewController.m in Sources */,
+				CD9B30CF185BE1E6002E47AF /* PhotoListTableViewController.m in Sources */,
 				CD9B308F184AA0D8002E47AF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
