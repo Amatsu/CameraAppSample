@@ -169,6 +169,10 @@
 }
 
 #pragma mark - 露出制御
+//露光処理開始フラグ(device.adjustingExposureを手動では変更できないため）
+BOOL adjustingExposure;
+
+//露光調整
 - (void) autoExposureAtPoint:(CGPoint)point{
     
     //(1) 0.0〜1.0 に正規化した値
@@ -180,13 +184,44 @@
     if( [device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
         NSError *error;
         if ([device lockForConfiguration:&error]) {
+            adjustingExposure = YES;
             device.exposurePointOfInterest = pointOfInterest;
             device.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+            [device addObserver:self
+                     forKeyPath:@"adjustingExposure"
+                        options:NSKeyValueObservingOptionNew
+                        context:nil];
             [device unlockForConfiguration];
+            NSLog(@"2:%d",device.adjustingExposure);
+            
         }
     }
 }
 
+//露光調整終了時
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change context:(void *)context {
+    
+    AVCaptureDevice *device = videoInput.device;
+    if (!adjustingExposure) {
+        return;
+    }
+    NSLog(@"3:%d",device.adjustingExposure);
+    if ([keyPath isEqual:@"adjustingExposure"]) {
+        NSLog(@"4:%d",device.adjustingExposure);
+        if ([[change objectForKey:NSKeyValueChangeNewKey] boolValue] == NO) {
+            adjustingExposure = NO;
+            NSError *error = nil;
+            if ([device lockForConfiguration:&error]) {
+                [device setExposureMode:AVCaptureExposureModeLocked];
+                [device unlockForConfiguration];
+            }
+        }
+    }
+}
+
+#pragma mark - フォーカスアニメーション
 //フォーカス設定位置にフォーカスレイヤをアニメーション表示
 - (void) setFoucusAnimation:(CGPoint)point {
     foucusSetFrameView.frame = CGRectMake(point.x - INDICATOR_RECT_SIZE/2.0,
@@ -284,6 +319,11 @@
     silent = NO;
     //拡大倍率
     effectiveScale = 1.0;
+    //露光監視
+//    [videoInput addObserver:self
+//                 forKeyPath:@"adjustingExposure"
+//                    options:NSKeyValueObservingOptionNew
+//                    context:nil];
 }
 
 //プレビューレイヤをビューに設定
@@ -333,6 +373,12 @@
     [self setupImageCapture];
     [self setupVideoCapture];
     
+//    //露光調整プロパティ監視
+//    [videoInput addObserver:self
+//                 forKeyPath:@"adjustingExposure"
+//                    options:NSKeyValueObservingOptionNew
+//                    context:nil];
+
     [captureSession startRunning];
     
 }

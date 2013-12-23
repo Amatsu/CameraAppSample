@@ -28,12 +28,11 @@ float effectiveScale;
     self.cameraManager = CameraManager.new;
     [self.cameraManager setPreview:self.photoPreview];
     
-    
-    //露光調整プロパティ監視
-    [self.cameraManager.getInputDevice addObserver:self
-             forKeyPath:@"adjustingExposure"
-                options:NSKeyValueObservingOptionNew
-                context:nil];
+//    //露光調整プロパティ監視
+//    [self.cameraManager.getInputDevice addObserver:self
+//             forKeyPath:@"adjustingExposure"
+//                options:NSKeyValueObservingOptionNew
+//                context:nil];
     
     //タップジェスチャーを追加
     self.photoPreview.userInteractionEnabled = YES;
@@ -51,25 +50,26 @@ float effectiveScale;
     //設定Viewを非表示
     [self.cameraConfigView setHidden:YES];
     
+    //倍率の初期化
     beginGestureScale= 1.0;
     effectiveScale = 1.0;
     
 }
 
-//露光関連
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    AVCaptureDevice *device = self.cameraManager.getInputDevice.device;
-    if ([keyPath isEqual:@"adjustingExposure"]) {
-        if ([[change objectForKey:NSKeyValueChangeNewKey] boolValue] == NO) {
-            NSError *error = nil;
-            if ([device lockForConfiguration:&error]) {
-                [device setExposureMode:AVCaptureExposureModeLocked];
-                [device unlockForConfiguration];
-            }
-        }
-    }
-}
+////露光関連
+//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+//{
+//    AVCaptureDevice *device = self.cameraManager.getInputDevice.device;
+//    if ([keyPath isEqual:@"adjustingExposure"]) {
+//        if ([[change objectForKey:NSKeyValueChangeNewKey] boolValue] == NO) {
+//            NSError *error = nil;
+//            if ([device lockForConfiguration:&error]) {
+//                [device setExposureMode:AVCaptureExposureModeLocked];
+//                [device unlockForConfiguration];
+//            }
+//        }
+//    }
+//}
 
 #pragma mark - イベント関連
 //タッチイベント

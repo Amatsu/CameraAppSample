@@ -6,9 +6,15 @@
          contextName = "GLOBAL">
          <PersistentStrings>
             <PersistentString
+               value = "device.adjustingExposure">
+            </PersistentString>
+            <PersistentString
                value = "ORIENTATION">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CameraManager observeValueForKeyPath:ofObject:change:context:]:CameraManager.m">
       </ContextState>
       <ContextState
          contextName = "-[ViewController supportedInterfaceOrientations]:ViewController.m">
