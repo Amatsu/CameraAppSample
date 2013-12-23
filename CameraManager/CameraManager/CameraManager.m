@@ -57,28 +57,21 @@
 }
     
 //カメラを有効化
-- (void)enableCamera:(AVCaptureDevicePosition)desiredPosition{
+-(void)enableCamera:(AVCaptureDevicePosition)desiredPosition{
     [captureSession stopRunning];
     
-    for(AVCaptureDevice *d in [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo])
-    {
-        if([d position] == desiredPosition)
-        {
+    for (AVCaptureDevice *d in [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]) {
+        if ([d position] == desiredPosition) {
             [captureSession beginConfiguration];
-            videoInput = [AVCaptureDeviceInput deviceInputWithDevice:d error:nil];
-            for(AVCaptureDeviceInput *oldDevice in [[self.previewLayer session] inputs])
-            {
-              
-//                if ([captureSession canAddInput:videoInput]) {
-//                }
-                
-                [captureSession addInput:videoInput];
-                [captureSession commitConfiguration];
-                break;
+            videoInput= [AVCaptureDeviceInput deviceInputWithDevice:d error:nil];
+            for (AVCaptureInput *oldInput in [[self.previewLayer session] inputs]) {
+                [captureSession removeInput:oldInput];
             }
+            [captureSession addInput:videoInput];
+            [captureSession commitConfiguration];
+            break;
         }
     }
-    
     [captureSession startRunning];
 }
 
