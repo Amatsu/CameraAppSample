@@ -51,6 +51,9 @@ float effectiveScale;
     //設定Viewを非表示
     [self.cameraConfigView setHidden:YES];
     
+    beginGestureScale= 1.0;
+    effectiveScale = 1.0;
+    
 }
 
 //露光関連

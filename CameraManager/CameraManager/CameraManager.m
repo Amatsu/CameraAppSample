@@ -224,9 +224,13 @@
     effectiveScale = scale;
     if (effectiveScale < 1.0)
         effectiveScale = 1.0;
+    //拡大可能最大倍率の場合は最大値で固定
     CGFloat maxScaleAndCropFactor = [[imageOutput connectionWithMediaType:AVMediaTypeVideo] videoMaxScaleAndCropFactor];
     if (effectiveScale > maxScaleAndCropFactor)
         effectiveScale = maxScaleAndCropFactor;
+    //消音撮影の場合は拡大非対応(UIImage取得後の拡大処理の最適化処理が遅いため）
+    if (silent == YES)
+        effectiveScale = 1.0;
     [CATransaction begin];
     [CATransaction setAnimationDuration:.025];
     //プレビューレイヤに拡大倍率を適用
@@ -238,11 +242,17 @@
 //消音ONOFF
 - (void)silent:(BOOL)yesno {
     silent = yesno;
+    //消音撮影の場合は拡大倍率を初期化する
+    if (silent == YES)
+        [self setScale:effectiveScale];
 }
 
 //消音設定反転
 - (void)silentModeToggle {
     silent = !silent;
+    //消音撮影の場合は拡大倍率を初期化する
+    if (silent == YES)
+        [self setScale:effectiveScale];
 }
 
 #pragma mark -　初期化
