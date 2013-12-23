@@ -26,6 +26,8 @@
     dispatch_queue_t videoOutputQueue;
     //拡大倍率
     CGFloat effectiveScale;
+    //消音設定
+    BOOL silent;
 }
 
 - (AVCaptureDevice *) cameraWithPosition:(AVCaptureDevicePosition)position;
@@ -118,7 +120,6 @@
 }
 
 #pragma mark - フォーカス制御
-
 /*
  AVCaptureFocusModeLocked 焦点距離ロックモード
  AVCaptureFocusModeAutoFocus 焦点がシーンの中心から外れても焦点維持
@@ -178,6 +179,16 @@
     }	
 
 }
+#pragma mark - 消音設定
+//消音ONOFF
+- (void)silent:(BOOL)yesno {
+    silent = yesno;
+}
+
+//消音設定反転
+- (void)silentModeToggle {
+    silent = !silent;
+}
 
 #pragma mark -　初期化
 //初期化
@@ -185,6 +196,7 @@
     if(super.init)
     {
         [self setupAvCapture:AVCaptureSessionPreset1280x720];
+        [self initSetting];
         return self;
     }
     return nil;
@@ -195,9 +207,18 @@
     if(super.init)
     {
         [self setupAvCapture:preset];
+        [self initSetting];
         return self;
     }
     return nil;
+}
+
+//画面サイズ以外の初期パラメタを設定
+- (void) initSetting {
+    //消音OFF
+    silent = NO;
+    //拡大倍率
+    effectiveScale = 1.0;
 }
 
 //プレビューレイヤをビューに設定
@@ -251,6 +272,7 @@
     }
     return NO;
 }
+
 //ビデオキャプチャの初期化
 //設定後:captureOutputが呼ばれる
 -(BOOL)setupVideoCapture{
@@ -288,6 +310,15 @@
 }
 
 #pragma  mark - 撮影
+- (void)shotPhoto:(takePhotoBlock) block{
+    
+    if (silent == YES) {
+        [self takePhoto:block];
+    }else {
+        [self rotatedVideoImage:block];
+    }
+}
+
 //写真撮影
 -(void)takePhoto:(takePhotoBlock) block{
     
@@ -312,10 +343,14 @@
                                                  UIImage *image = [UIImage imageWithData:data];
                                                  block(image,error);
                                              }];
-    
-    
 }
-//  デバイスの向きに合わせたビデオイメージを作成
+
+//静音撮影
+-(void)rotatedVideoImage:(takePhotoBlock) block {
+    block([self rotatedVideoImage],nil);
+}
+
+//デバイスの向きに合わせたビデオイメージを作成
 -(UIImage*)rotatedVideoImage{
     
     if(self.videoImage == nil)

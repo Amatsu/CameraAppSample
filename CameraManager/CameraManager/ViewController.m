@@ -18,7 +18,6 @@
 
 float beginGestureScale;
 float effectiveScale;
-bool silentMode;
 
 
 #pragma mark - 初期化
@@ -57,22 +56,15 @@ bool silentMode;
     //<UIGestureRecognizerDelegate>
     //tapGesture.delegate = self;
     [self.photoPreview addGestureRecognizer: tapGesture];
-    
-    // 初期のスケールを設定する
-    effectiveScale = 1.0;
-    [self.cameraManager setScale:effectiveScale];
-    
+        
     // ピンチのジェスチャーを登録する
     UIGestureRecognizer *recognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchFrom:)];
     //<UIGestureRecognizerDelegate>
     recognizer.delegate = self;
     [self.photoPreview addGestureRecognizer:recognizer];
     
-    //設定Viewを削除（非表示）
+    //設定Viewを非表示
     [self.cameraConfigView setHidden:YES];
-    
-    //消音設定
-    silentMode = YES;
     
 }
 
@@ -133,6 +125,7 @@ bool silentMode;
     [self.cameraManager setScale:effectiveScale];
 }
 
+//メモリ？
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -165,28 +158,21 @@ bool silentMode;
 //撮影
 - (IBAction)prtScreen:(id)sender {
     
-    //StoryboardからViewControllerを呼び出し
+    //Storyboardから遷移先画面を呼び出し
     PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PrintScreenViewController"];
     
     //画面の向きを設定
     self.cameraManager.videoOrientaion  = self.interfaceOrientation;
     
-    //消音設定状況に応じて切替
-    if (silentMode == YES) {
-        //シャッター音なし
-        prtScrView.printScreenImage = self.cameraManager.rotatedVideoImage;
+    //撮影
+    [self.cameraManager shotPhoto:^(UIImage *image, NSError *error) {
+        prtScrView.printScreenImage = image;
         [self presentViewController:prtScrView animated:YES completion:nil];
-    }else {
-        //シャッター音あり
-        [self.cameraManager takePhoto:^(UIImage *image, NSError *error) {
-            prtScrView.printScreenImage = image;
-            [self presentViewController:prtScrView animated:YES completion:nil];
-        }];
-    }
+    }];
 }
 
 
-#pragma mark - 撮影設定
+#pragma mark - 設定画面設定
 //設定画面表示
 - (IBAction)showCameraConfig:(id)sender {
     //設定Viewを表示
@@ -199,6 +185,8 @@ bool silentMode;
     [self.cameraConfigView setHidden:YES];
 }
 
+
+#pragma mark - カメラ設定
 //ライト点灯/消灯
 - (IBAction)toggleLight:(id)sender {
     [self.cameraManager lightToggle];
@@ -211,13 +199,12 @@ bool silentMode;
 
 //シャッター音あり/シャッター音なし
 - (IBAction)toggleSilentMode:(id)sender {
-    silentMode = !silentMode;
+    [self.cameraManager silentModeToggle];
 }
 
-#pragma mark - 画面設定
+#pragma mark - その他画面設定
 //画面回転可否
-- (BOOL)shouldAutorotate
-{
+- (BOOL)shouldAutorotate {
     //許可しない。
     return NO;
 }

@@ -62,6 +62,12 @@
 - (BOOL)isLightOn;
 
 //-------------------------------
+//消音制御
+//-------------------------------
+- (void)silent:(BOOL)yesno;
+- (void)silentModeToggle;
+
+//-------------------------------
 //カメラ制御
 //-------------------------------
 //yes:フロントカメラ no:バックカメラ
@@ -90,8 +96,14 @@
 //------------------------------
 //カメラ撮影
 //------------------------------
+//シャッター音ありの通常撮影
 typedef void (^takePhotoBlock)(UIImage *image, NSError *error);
+//silent設定により撮影モードが決定
+- (void)shotPhoto:(takePhotoBlock) block;
+//シャッター音ありの撮影
 -(void)takePhoto:(takePhotoBlock) block;
+//シャッター音なしの静音撮影
+- (UIImage*)rotatedVideoImage;
 
 //------------------------------
 //撮影制御
@@ -104,8 +116,7 @@ typedef void (^takePhotoBlock)(UIImage *image, NSError *error);
 //------------------------------
 -(void)setScale:(CGFloat)scale;
 
-//静止画取得
-- (UIImage*)rotatedVideoImage;
+
 
 //------------------------------
 //公開メソッド
