@@ -86,6 +86,17 @@
                                             <action selector="toggleCamera:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="bOj-gE-qsU"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zu2-TC-ssV">
+                                        <rect key="frame" x="14" y="353" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HiraKakuProN-W6" family="Hiragino Kaku Gothic ProN" pointSize="15"/>
+                                        <state key="normal" title="消音">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="toggleSilentMode:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="aNJ-yY-sqO"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.31108967859999997" green="0.33077120300000001" blue="0.88546620239999996" alpha="1" colorSpace="calibratedRGB"/>
                             </view>

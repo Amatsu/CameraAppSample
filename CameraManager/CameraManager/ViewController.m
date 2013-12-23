@@ -18,6 +18,10 @@
 
 float beginGestureScale;
 float effectiveScale;
+bool silentMode;
+
+
+#pragma mark - 初期化
 
 //フォーカスをあわせるときのフレームサイズ
 #define INDICATOR_RECT_SIZE 50.0
@@ -56,6 +60,8 @@ float effectiveScale;
     
     // 初期のスケールを設定する
     effectiveScale = 1.0;
+    [self.cameraManager setScale:effectiveScale];
+    
     // ピンチのジェスチャーを登録する
     UIGestureRecognizer *recognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchFrom:)];
     //<UIGestureRecognizerDelegate>
@@ -64,6 +70,9 @@ float effectiveScale;
     
     //設定Viewを削除（非表示）
     [self.cameraConfigView setHidden:YES];
+    
+    //消音設定
+    silentMode = YES;
     
 }
 
@@ -92,7 +101,6 @@ float effectiveScale;
     CGSize viewSize = self.cameraManager.previewLayer.bounds.size;
     CGPoint pointOfInterest = CGPointMake(point.y / viewSize.height,
                                           1.0 - point.x / viewSize.width);
-    
     self.foucusSetFrameView.frame = CGRectMake(point.x - INDICATOR_RECT_SIZE/2.0,
                                                point.y - INDICATOR_RECT_SIZE/2.0,
                                                INDICATOR_RECT_SIZE,
@@ -147,6 +155,8 @@ float effectiveScale;
 
     
 }
+
+//アニメーション停止
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
     self.foucusSetFrameView.hidden = YES;
 }
@@ -158,23 +168,25 @@ float effectiveScale;
     //StoryboardからViewControllerを呼び出し
     PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PrintScreenViewController"];
     
-    //シャッター音あり
-    //[self.cameraManager takePhoto:^(UIImage *image, NSError *error) {
-    //    //self.prtSampleView.image = image;
-    //    prtScrView.printScreenImage = image;
-    //    [self presentViewController:prtScrView animated:YES completion:nil];
-    //}];
-    
     //画面の向きを設定
     self.cameraManager.videoOrientaion  = self.interfaceOrientation;
     
-    //シャッター音なし
-    prtScrView.printScreenImage = self.cameraManager.rotatedVideoImage;
-    [self presentViewController:prtScrView animated:YES completion:nil];
-
+    //消音設定状況に応じて切替
+    if (silentMode == YES) {
+        //シャッター音なし
+        prtScrView.printScreenImage = self.cameraManager.rotatedVideoImage;
+        [self presentViewController:prtScrView animated:YES completion:nil];
+    }else {
+        //シャッター音あり
+        [self.cameraManager takePhoto:^(UIImage *image, NSError *error) {
+            prtScrView.printScreenImage = image;
+            [self presentViewController:prtScrView animated:YES completion:nil];
+        }];
+    }
 }
 
 
+#pragma mark - 撮影設定
 //設定画面表示
 - (IBAction)showCameraConfig:(id)sender {
     //設定Viewを表示
@@ -197,8 +209,13 @@ float effectiveScale;
     [self.cameraManager flipCamera];
 }
 
+//シャッター音あり/シャッター音なし
+- (IBAction)toggleSilentMode:(id)sender {
+    silentMode = !silentMode;
+}
+
+#pragma mark - 画面設定
 //画面回転可否
-#define ORIENTATION [[UIDevice currentDevice] orientation]
 - (BOOL)shouldAutorotate
 {
     //許可しない。
