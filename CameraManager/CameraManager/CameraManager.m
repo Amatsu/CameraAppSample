@@ -319,11 +319,6 @@ BOOL adjustingExposure;
     silent = NO;
     //拡大倍率
     effectiveScale = 1.0;
-    //露光監視
-//    [videoInput addObserver:self
-//                 forKeyPath:@"adjustingExposure"
-//                    options:NSKeyValueObservingOptionNew
-//                    context:nil];
 }
 
 //プレビューレイヤをビューに設定
@@ -373,12 +368,6 @@ BOOL adjustingExposure;
     [self setupImageCapture];
     [self setupVideoCapture];
     
-//    //露光調整プロパティ監視
-//    [videoInput addObserver:self
-//                 forKeyPath:@"adjustingExposure"
-//                    options:NSKeyValueObservingOptionNew
-//                    context:nil];
-
     [captureSession startRunning];
     
 }
