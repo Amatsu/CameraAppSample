@@ -28,6 +28,10 @@
     CGFloat effectiveScale;
     //消音設定
     BOOL silent;
+    //フォーカスをあわせる時のフレーム
+    CALayer* foucusSetFrameView;
+    //フォーカスをあわせるときのフレームサイズ
+    #define INDICATOR_RECT_SIZE 50.0
 }
 
 - (AVCaptureDevice *) cameraWithPosition:(AVCaptureDevicePosition)position;
@@ -127,27 +131,92 @@
  */
 
 - (void) autoFocusAtPoint:(CGPoint)point{
+    
+    //(1) 0.0〜1.0 に正規化した値
+    //(2) ランドスケープ（横向き/ホームボタン右）の時の左上を原点とする座標系
+    CGSize viewSize = self.previewLayer.bounds.size;
+    CGPoint pointOfInterest = CGPointMake(point.y / viewSize.height,1.0 - point.x / viewSize.width);
+    
     AVCaptureDevice *device = videoInput.device;
     if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
         NSError *error;
         if ([device lockForConfiguration:&error]) {
-            [device setFocusPointOfInterest:point];
+            [device setFocusPointOfInterest:pointOfInterest];
             [device setFocusMode:AVCaptureFocusModeAutoFocus];
             [device unlockForConfiguration];
-        }    }
+            [self setFoucusAnimation:point];
+        }
+    }
 }
 
-
 - (void) continuousFocusAtPoint:(CGPoint)point{
+    
+    //(1) 0.0〜1.0 に正規化した値
+    //(2) ランドスケープ（横向き/ホームボタン右）の時の左上を原点とする座標系
+    CGSize viewSize = self.previewLayer.bounds.size;
+    CGPoint pointOfInterest = CGPointMake(point.y / viewSize.height,1.0 - point.x / viewSize.width);
+    
     AVCaptureDevice *device = videoInput.device;
     if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
 		NSError *error;
 		if ([device lockForConfiguration:&error]) {
-			[device setFocusPointOfInterest:point];
+			[device setFocusPointOfInterest:pointOfInterest];
 			[device setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
 			[device unlockForConfiguration];
+            [self setFoucusAnimation:point];
 		}
 	}
+}
+
+#pragma mark - 露出制御
+- (void) autoExposureAtPoint:(CGPoint)point{
+    
+    //(1) 0.0〜1.0 に正規化した値
+    //(2) ランドスケープ（横向き/ホームボタン右）の時の左上を原点とする座標系
+    CGSize viewSize = self.previewLayer.bounds.size;
+    CGPoint pointOfInterest = CGPointMake(point.y / viewSize.height,1.0 - point.x / viewSize.width);
+    
+    AVCaptureDevice *device = videoInput.device;
+    if( [device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+        NSError *error;
+        if ([device lockForConfiguration:&error]) {
+            device.exposurePointOfInterest = pointOfInterest;
+            device.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+            [device unlockForConfiguration];
+        }
+    }
+}
+
+//フォーカス設定位置にフォーカスレイヤをアニメーション表示
+- (void) setFoucusAnimation:(CGPoint)point {
+    foucusSetFrameView.frame = CGRectMake(point.x - INDICATOR_RECT_SIZE/2.0,
+                                          point.y - INDICATOR_RECT_SIZE/2.0,
+                                          INDICATOR_RECT_SIZE,
+                                          INDICATOR_RECT_SIZE);
+    
+    //ポイントをアニメーション表示
+    [self blinkImage:foucusSetFrameView];
+}
+
+//点滅アニメーション
+- (void)blinkImage:(CALayer *)target {
+    
+    target.hidden = NO;
+    CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    animation.duration = 0.1f;
+    animation.autoreverses = YES;
+    animation.repeatCount = 3; //infinite loop -> HUGE_VAL
+    animation.fromValue = [NSNumber numberWithFloat:1.0f]; //MAX opacity
+    animation.toValue = [NSNumber numberWithFloat:0.1f]; //MIN opacity
+    animation.delegate = self;
+    [target addAnimation:animation forKey:@"blink"];
+    
+}
+
+//アニメーション停止
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    if (flag)
+        foucusSetFrameView.hidden = YES;
 }
 
 #pragma mark - ズーム制御
@@ -164,20 +233,6 @@
     [self.previewLayer setAffineTransform:CGAffineTransformMakeScale(effectiveScale, effectiveScale)];
     [CATransaction commit];
     
-}
-
-#pragma mark - 露出制御
-- (void) autoExposureAtPoint:(CGPoint)point{
-    AVCaptureDevice *device = videoInput.device;
-    if( [device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
-        NSError *error;
-        if ([device lockForConfiguration:&error]) {
-            device.exposurePointOfInterest = point;
-            device.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
-            [device unlockForConfiguration];
-        }
-    }	
-
 }
 #pragma mark - 消音設定
 //消音ONOFF
@@ -225,6 +280,20 @@
 - (void)setPreview:(UIView *)view{
     self.previewLayer.frame = view.bounds;
     [view.layer addSublayer:self.previewLayer];
+    [self setFoucusLayer];
+}
+
+//フォーカス用のレイヤを追加
+- (void)setFoucusLayer {
+    foucusSetFrameView = [CALayer layer];
+    foucusSetFrameView.borderColor = [[UIColor whiteColor] CGColor];
+    foucusSetFrameView.borderWidth = 1.0;
+    foucusSetFrameView.frame = CGRectMake(self.previewLayer.bounds.size.width/2.0 - INDICATOR_RECT_SIZE/2.0,
+                                          self.previewLayer.bounds.size.height/2.0 - INDICATOR_RECT_SIZE/2.0,
+                                          INDICATOR_RECT_SIZE,
+                                          INDICATOR_RECT_SIZE);
+    foucusSetFrameView.hidden = YES;
+    [self.previewLayer addSublayer:foucusSetFrameView];
 }
 
 - (void)setupAvCapture:(NSString*)preset{

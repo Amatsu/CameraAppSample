@@ -9,40 +9,25 @@
 #import "ViewController.h"
 #import "PrintScreenViewController.h"
 
-
 @interface ViewController ()<UIGestureRecognizerDelegate>
-
 @end
 
 @implementation ViewController
 
+//拡大倍率を保持する変数
 float beginGestureScale;
 float effectiveScale;
 
-
 #pragma mark - 初期化
-
-//フォーカスをあわせるときのフレームサイズ
-#define INDICATOR_RECT_SIZE 50.0
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    //カメラマネージャ初期化
     self.cameraManager = CameraManager.new;
     [self.cameraManager setPreview:self.photoPreview];
     
-    //フォーカス調整フレームを追加
-    self.foucusSetFrameView = [CALayer layer];
-    self.foucusSetFrameView.borderColor = [[UIColor whiteColor] CGColor];
-    self.foucusSetFrameView.borderWidth = 1.0;
-    self.foucusSetFrameView.frame = CGRectMake(self.view.bounds.size.width/2.0 - INDICATOR_RECT_SIZE/2.0,
-                                               self.view.bounds.size.height/2.0 - INDICATOR_RECT_SIZE/2.0,
-                                               INDICATOR_RECT_SIZE,
-                                               INDICATOR_RECT_SIZE);
-    self.foucusSetFrameView.hidden = YES;
-    [self.photoPreview.layer addSublayer:self.foucusSetFrameView];
     
     //露光調整プロパティ監視
     [self.cameraManager.getInputDevice addObserver:self
@@ -83,31 +68,19 @@ float effectiveScale;
     }
 }
 
+#pragma mark - イベント関連
+//タッチイベント
 - (void)didTapGesture:(UITapGestureRecognizer*)tgr
 {
     //タッチイベントから座標を取得
     CGPoint point = [tgr locationInView:tgr.view];
     
-    //1) 0.0〜1.0 に正規化した値
-    //(2) ランドスケープ（横向き/ホームボタン右）の時の左上を原点とする座標系
-    CGSize viewSize = self.cameraManager.previewLayer.bounds.size;
-    CGPoint pointOfInterest = CGPointMake(point.y / viewSize.height,
-                                          1.0 - point.x / viewSize.width);
-    self.foucusSetFrameView.frame = CGRectMake(point.x - INDICATOR_RECT_SIZE/2.0,
-                                               point.y - INDICATOR_RECT_SIZE/2.0,
-                                               INDICATOR_RECT_SIZE,
-                                               INDICATOR_RECT_SIZE);
-    self.foucusSetFrameView.hidden = NO;
-    
-    //点滅アニメーション
-    [self blinkImage:self.foucusSetFrameView];
-    
     //カメラのフォーカスを合わせる
-    [self.cameraManager autoFocusAtPoint:pointOfInterest];
-    [self.cameraManager autoExposureAtPoint:pointOfInterest];
+    [self.cameraManager autoFocusAtPoint:point];
+    [self.cameraManager autoExposureAtPoint:point];
 }
 
-//ピンチアクション中のデリゲート
+//ピンチイベント
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
     if ([gestureRecognizer isKindOfClass:[UIPinchGestureRecognizer class]]) {
@@ -125,36 +98,7 @@ float effectiveScale;
     [self.cameraManager setScale:effectiveScale];
 }
 
-//メモリ？
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-//点滅アニメーション
-- (void)blinkImage:(CALayer *)target {
-    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-    animation.duration = 1.0f;
-    animation.repeatCount = HUGE_VAL;
-    animation.values = [[NSArray alloc] initWithObjects:
-                        [NSNumber numberWithFloat:1.0f],
-                        [NSNumber numberWithFloat:0.0f],
-                        [NSNumber numberWithFloat:1.0f],
-                        nil];
-    animation.repeatCount = 1;
-    animation.delegate = self;
-    [target addAnimation:animation forKey:@"blink"];
-
-    
-}
-
-//アニメーション停止
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    self.foucusSetFrameView.hidden = YES;
-}
-
-
+#pragma mark - 撮影
 //撮影
 - (IBAction)prtScreen:(id)sender {
     
@@ -213,5 +157,13 @@ float effectiveScale;
 //- (void) didSelect:(PhotoListTabBarController *)tabBarController {
 //    [tabBarController showTabBar:NO];
 //}
+
+#pragma mark - メモリ関連
+//メモリ？
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 @end
