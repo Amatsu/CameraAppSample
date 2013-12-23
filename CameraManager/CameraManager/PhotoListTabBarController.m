@@ -65,6 +65,18 @@
     }
     subview.frame = frame;
     tabBar.hidden = !show;
+
 }
+
+/*
+ * 画面回転可否
+ */
+#define ORIENTATION [[UIDevice currentDevice] orientation]
+- (BOOL)shouldAutorotate
+{
+    //許可しない。
+    return NO;
+}
+
 
 @end

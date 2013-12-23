@@ -80,5 +80,27 @@
     [alert show];
 }
 
+/*
+ * 画面回転可否
+ */
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+/*
+ * 画面回転をサポートする向き
+ */
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+/*
+ * 初期表示の画面向き
+ */
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    return UIInterfaceOrientationPortrait;
+}
 
 @end

@@ -62,13 +62,10 @@ float effectiveScale;
     recognizer.delegate = self;
     [self.photoPreview addGestureRecognizer:recognizer];
     
+    //設定Viewを削除（非表示）
+    [self.cameraConfigView setHidden:YES];
+    
 }
-
-//タブバーコントローラーの遷移イベント
-- (void) didSelect:(PhotoListTabBarController *)tabBarController {
-    [tabBarController showTabBar:NO];
-}
-
 
 //露光関連
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -84,16 +81,6 @@ float effectiveScale;
         }
     }
 }
-
-//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
-//{
-//    // gestureをセットしたview以外がタッチされた場合はgestureを無視
-//    if (touch.view != self.photoPreview)
-//    {
-//        return false;
-//    }
-//    return true;
-//}
 
 - (void)didTapGesture:(UITapGestureRecognizer*)tgr
 {
@@ -178,10 +165,49 @@ float effectiveScale;
     //    [self presentViewController:prtScrView animated:YES completion:nil];
     //}];
     
+    //画面の向きを設定
+    self.cameraManager.videoOrientaion  = self.interfaceOrientation;
+    
     //シャッター音なし
     prtScrView.printScreenImage = self.cameraManager.rotatedVideoImage;
     [self presentViewController:prtScrView animated:YES completion:nil];
 
 }
+
+
+//設定画面表示
+- (IBAction)showCameraConfig:(id)sender {
+    //設定Viewを表示
+    [self.cameraConfigView setHidden:NO];
+}
+
+//設定画面非表示
+- (IBAction)hideCameraConfig:(id)sender {
+    //設定Viewを非表示
+    [self.cameraConfigView setHidden:YES];
+}
+
+//ライト点灯/消灯
+- (IBAction)toggleLight:(id)sender {
+    [self.cameraManager lightToggle];
+}
+
+//メインカメラ/フェイスカメラ
+- (IBAction)toggleCamera:(id)sender {
+    [self.cameraManager flipCamera];
+}
+
+//画面回転可否
+#define ORIENTATION [[UIDevice currentDevice] orientation]
+- (BOOL)shouldAutorotate
+{
+    //許可しない。
+    return NO;
+}
+
+//タブバーコントローラーの遷移イベント
+//- (void) didSelect:(PhotoListTabBarController *)tabBarController {
+//    [tabBarController showTabBar:NO];
+//}
 
 @end

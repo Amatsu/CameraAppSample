@@ -10,14 +10,20 @@
 #import "CameraManager.h"
 #import "PhotoListTabBarController.h"
 
-@interface ViewController : UIViewController<CameraManagerDelegate,PhotoListTabBarControllerDelegate>
+@interface ViewController : UIViewController<CameraManagerDelegate>
+//,PhotoListTabBarControllerDelegate
 
 @property CameraManager* cameraManager;
 @property (weak, nonatomic) IBOutlet UIImageView *photoPreview;
+@property (weak, nonatomic) IBOutlet UIView *cameraConfigView;
 
 //フォーカスをあわせる時のフレーム
 @property (nonatomic, strong) CALayer* foucusSetFrameView;
 
 - (IBAction)prtScreen:(id)sender;
+- (IBAction)showCameraConfig:(id)sender;
+- (IBAction)hideCameraConfig:(id)sender;
+- (IBAction)toggleLight:(id)sender;
+- (IBAction)toggleCamera:(id)sender;
 
 @end

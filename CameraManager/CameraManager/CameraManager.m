@@ -68,6 +68,10 @@
             videoInput = [AVCaptureDeviceInput deviceInputWithDevice:d error:nil];
             for(AVCaptureDeviceInput *oldDevice in [[self.previewLayer session] inputs])
             {
+              
+//                if ([captureSession canAddInput:videoInput]) {
+//                }
+                
                 [captureSession addInput:videoInput];
                 [captureSession commitConfiguration];
                 break;
