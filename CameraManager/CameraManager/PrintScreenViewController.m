@@ -8,7 +8,7 @@
 
 #import "PrintScreenViewController.h"
 
-@interface PrintScreenViewController ()<UIGestureRecognizerDelegate>
+@interface PrintScreenViewController ()<UIGestureRecognizerDelegate,UITextFieldDelegate>
 
 @end
 
@@ -55,7 +55,8 @@ NSInteger markCnt = 0;
         fukidashi.tag = markCnt;
         
         //テキストフィールド追加
-        UITextField *msg =[[UITextField alloc] initWithFrame:CGRectMake(10, 10, 150, 50)];
+        UITextField *msg =[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 150, 50)];
+        [msg setDelegate: self];
         [fukidashi addSubview:msg];
         
         //サブビューとして追加
@@ -116,6 +117,14 @@ NSInteger markCnt = 0;
     NSLog(@"吹き出しがドラッグされました。%d",sender.view.tag);
 }
 
+//キーボード非表示
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    // ソフトウェアキーボードを閉じる
+    [textField resignFirstResponder];
+    return YES;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -131,6 +140,8 @@ NSInteger markCnt = 0;
 
 //画像保存
 - (IBAction)saveImage:(id)sender {
+    
+    //画像合成
     
     //ファイル名を設定
      [UIImage imageNamed:[NSString stringWithFormat:@"%@.jpg", [self stringWithUUID]]];
