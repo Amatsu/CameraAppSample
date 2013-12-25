@@ -37,16 +37,19 @@ NSInteger markCnt = 0;
     //tapGesture.delegate = self;
     [self.printScreenImageView addGestureRecognizer: tapGesture];
     
+    UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget: self action: @selector(didRotationGesture:)];
+    [self.printScreenImageView addGestureRecognizer:rotationGesture];
+    
+    
 }
 
 #pragma mark - イベント関連
 //タッチイベント
-- (void)didTapGesture:(UITapGestureRecognizer*)tgr
-{
+- (void)didTapGesture:(UITapGestureRecognizer*)sender {
     if (choiceObjNm == MARK_FUKIDASHI) {
         //タッチポイントに吹き出しを貼り付け
         markCnt += 1;
-        CGPoint point = [tgr locationInView:tgr.view];
+        CGPoint point = [sender locationInView:sender.view];
         UIView *fukidashi = [[UIView alloc] initWithFrame:CGRectMake(point.x,point.y,200,50)];
         fukidashi.layer.cornerRadius = 20;
         fukidashi.clipsToBounds = true;
@@ -73,6 +76,19 @@ NSInteger markCnt = 0;
     }
 }
 
+//パンイベント（ドラッグイベント）
+- (void)didRotationGesture:(UIRotationGestureRecognizer*)sender {
+    
+    //選択中のオブジェクトが存在しない場合は何もしない。
+    if (selectedMarkView == nil)
+        return;
+    
+    //選択中のオブジェクトを回転
+    selectedMarkView.transform = CGAffineTransformMakeRotation(sender.rotation);
+    
+    NSLog(@"printScreenImageViewのdidRotationGesture:%f",sender.rotation);
+}
+
 //選択中のオブジェクトを設定
 - (void)selectedMarkObject:(UIView*)selectView {
     //選択中のオブエジェクトに枠線をつける
@@ -88,10 +104,6 @@ NSInteger markCnt = 0;
 {
     //選択中のオブジェクトを設定
     [self selectedMarkObject:sender.view];
-    
-    //View回転
-    //CGFloat angle = 45.0 * M_PI / 180.0;
-    //sender.view.transform = CGAffineTransformMakeRotation(angle);
     
     NSLog(@"吹き出しがタッチされました。%d",sender.view.tag);
 }
