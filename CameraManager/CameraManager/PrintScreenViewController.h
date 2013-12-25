@@ -16,5 +16,6 @@
 - (IBAction)back:(id)sender;
 - (IBAction)saveImage:(id)sender;
 - (IBAction)showPhotoList:(id)sender;
+- (IBAction)choiceFukidashi:(id)sender;
 
 @end

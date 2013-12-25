@@ -9,7 +9,6 @@
 #import "PhotoListTabBarController.h"
 
 @interface PhotoListTabBarController ()
-
 @end
 
 @implementation PhotoListTabBarController
