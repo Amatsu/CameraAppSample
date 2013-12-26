@@ -33,13 +33,16 @@ NSInteger markCnt = 0;
     //タップジェスチャーを追加
     self.printScreenImageView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget: self action: @selector(didTapGesture:)];
-    //<UIGestureRecognizerDelegate>
-    //tapGesture.delegate = self;
     [self.printScreenImageView addGestureRecognizer: tapGesture];
-    
+    //回転ジェスチャーを追加
     UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget: self action: @selector(didRotationGesture:)];
     [self.printScreenImageView addGestureRecognizer:rotationGesture];
-    
+    //パン（ドラッグ）ジェスチャーを追加
+    //UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanGesture:)];
+    //[self.printScreenImageView addGestureRecognizer:panGesture];
+    //ピンチジェスチャーを追加
+    //UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinchGesture:)];
+    //[self.printScreenImageView addGestureRecognizer:pinchGesture];
     
 }
 
@@ -58,7 +61,8 @@ NSInteger markCnt = 0;
         fukidashi.tag = markCnt;
         
         //テキストフィールド追加
-        UITextField *msg =[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 150, 50)];
+        UITextField *msg =[[UITextField alloc] initWithFrame:CGRectMake(20, 1, 150, 50)];
+        msg.textColor = [UIColor whiteColor];
         [msg setDelegate: self];
         [fukidashi addSubview:msg];
         
@@ -76,7 +80,7 @@ NSInteger markCnt = 0;
     }
 }
 
-//パンイベント（ドラッグイベント）
+//回転イベント
 - (void)didRotationGesture:(UIRotationGestureRecognizer*)sender {
     
     //選択中のオブジェクトが存在しない場合は何もしない。
@@ -84,10 +88,45 @@ NSInteger markCnt = 0;
         return;
     
     //選択中のオブジェクトを回転
-    selectedMarkView.transform = CGAffineTransformMakeRotation(sender.rotation);
-    
+    selectedMarkView.transform = CGAffineTransformRotate(selectedMarkView.transform,sender.rotation);
     NSLog(@"printScreenImageViewのdidRotationGesture:%f",sender.rotation);
+    
+    //ラジアンを初期化
+    [sender setRotation:0.0];
 }
+
+//ドラッグイベント
+//- (void)didPanGesture:(UIPanGestureRecognizer*)sender {
+//    
+//    //原点　viewの中心
+//    CGPoint org = selectedMarkView.center;
+//    NSLog(@"オブジェクト座標 x：%f　y：%f", org.x, org.y);
+//    
+//    //タッチ座標を取得
+//    CGPoint point = [sender translationInView:sender.view];
+//    NSLog(@"タッチ座標 x：%f　y：%f", point.x, point.y);
+//    
+//    //座標の差を求める 画面の上側をY座標＋とするので、Y座標は符号を入れ替える
+//    float x = point.x - org.x;
+//    float y = -(point.y - org.y);
+//    
+//    //角度radianを求める
+//    float radian = atan2f(y, x);
+//    
+////    // radianに補正をする
+////    if(radian < 0) {
+////        radian = radian +2*M_PI;
+////    }
+//    
+//    //度に変換
+//    float degree = radian *360 /(2*M_PI);
+//    NSLog(@"ラジアン：%f　度：%f", radian, degree);
+//
+//    //selectedMarkView.transform = CGAffineTransformRotate(selectedMarkView.transform,);
+//    //selectedMarkView.transform = CGAffineTransformMakeRotation(radian);
+//    
+//    //[sender setTranslation:CGPointZero inView:self.view];
+//}
 
 //選択中のオブジェクトを設定
 - (void)selectedMarkObject:(UIView*)selectView {
