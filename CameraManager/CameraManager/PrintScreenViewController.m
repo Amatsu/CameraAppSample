@@ -192,7 +192,8 @@ NSInteger markCnt = 0;
 //画像保存
 - (IBAction)saveImage:(id)sender {
     
-    //画像合成
+    //UIviewを画像として取得
+    UIImage* img = [self convertUIImage:self.printScreenImageView];
     
     //ファイル名を設定
      [UIImage imageNamed:[NSString stringWithFormat:@"%@.jpg", [self stringWithUUID]]];
@@ -201,9 +202,56 @@ NSInteger markCnt = 0;
     //TODO
     
     //フォトアルバムに保存
-    UIImageWriteToSavedPhotosAlbum(self.printScreenImage,
+    UIImageWriteToSavedPhotosAlbum(img,
                                    self,
                                    @selector(savingImageIsFinished:didFinishSavingWithError:contextInfo:), nil);
+}
+
+//画像合成
+//- (UIImage*)createPhotoImage:(UIView*)view {
+//    
+//    // グラフィックスコンテキストを作る
+//    UIGraphicsBeginImageContext(view.bounds.size);
+//    
+//    //メイン画面を描画
+//    UIImage *mainImg = [self convertUIImage:view];
+//    CGRect rect;
+//    rect.origin = CGPointZero;
+//    rect.size = mainImg.size;
+//    [mainImg drawInRect:rect];
+//    
+//    //subviewをすべて合成
+//    NSArray* subViews = [view subviews];
+//    for (UIView *sv in subViews) {
+//        
+//        //subViewをUIImageに変換し描画
+//        UIImage *subImg = [self convertUIImage:sv];
+//        
+//        //重ね合わせる画像を描画
+//        rect.origin = sv.frame.origin;
+//        rect.size = subImg.size;
+//        [subImg drawInRect:rect];
+//    }
+//    
+//    // 描画した画像を取得する
+//    UIImage* img;
+//    img = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    
+//    return img;
+//}
+
+//UIViewからUIImageに変換
+-(UIImage*)convertUIImage:(UIView*)view {
+    
+    //ViewをUIImageに変換し描画
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0);
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return img;
 }
 
 //一覧表示
@@ -211,12 +259,6 @@ NSInteger markCnt = 0;
     //StoryboardからViewControllerを呼び出し
     PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PhotoListTabController"];
     [self presentViewController:prtScrView animated:YES completion:nil];
-}
-
-#pragma mark - 吹出関連
-//吹出を選択
-- (IBAction)choiceFukidashi:(id)sender {
-    choiceObjNm = MARK_FUKIDASHI;
 }
 
 //UUIDを利用しランダムのファイル名を用意
@@ -240,6 +282,12 @@ NSInteger markCnt = 0;
                                                     message:@"保存しました" delegate:nil
                                           cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
+}
+
+#pragma mark - 吹出関連
+//吹出を選択
+- (IBAction)choiceFukidashi:(id)sender {
+    choiceObjNm = MARK_FUKIDASHI;
 }
 
 /*
