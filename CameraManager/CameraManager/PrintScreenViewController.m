@@ -35,11 +35,11 @@ NSInteger markCnt = 0;
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget: self action: @selector(didTapGesture:)];
     [self.printScreenImageView addGestureRecognizer: tapGesture];
     //回転ジェスチャーを追加
-    UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget: self action: @selector(didRotationGesture:)];
-    [self.printScreenImageView addGestureRecognizer:rotationGesture];
+    //UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget: self action: @selector(didRotationGesture:)];
+    //[self.printScreenImageView addGestureRecognizer:rotationGesture];
     //パン（ドラッグ）ジェスチャーを追加
-    //UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanGesture:)];
-    //[self.printScreenImageView addGestureRecognizer:panGesture];
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanGesture:)];
+    [self.printScreenImageView addGestureRecognizer:panGesture];
     //ピンチジェスチャーを追加
     //UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinchGesture:)];
     //[self.printScreenImageView addGestureRecognizer:pinchGesture];
@@ -81,52 +81,83 @@ NSInteger markCnt = 0;
 }
 
 //回転イベント
-- (void)didRotationGesture:(UIRotationGestureRecognizer*)sender {
-    
-    //選択中のオブジェクトが存在しない場合は何もしない。
-    if (selectedMarkView == nil)
-        return;
-    
-    //選択中のオブジェクトを回転
-    selectedMarkView.transform = CGAffineTransformRotate(selectedMarkView.transform,sender.rotation);
-    NSLog(@"printScreenImageViewのdidRotationGesture:%f",sender.rotation);
-    
-    //ラジアンを初期化
-    [sender setRotation:0.0];
-}
+//- (void)didRotationGesture:(UIRotationGestureRecognizer*)sender {
+//    
+//    //選択中のオブジェクトが存在しない場合は何もしない。
+//    if (selectedMarkView == nil)
+//        return;
+//    
+//    //選択中のオブジェクトを回転
+//    selectedMarkView.transform = CGAffineTransformRotate(selectedMarkView.transform,sender.rotation);
+//    NSLog(@"printScreenImageViewのdidRotationGesture:%f",sender.rotation);
+//    
+//    //ラジアンを初期化
+//    [sender setRotation:0.0];
+//}
 
 //ドラッグイベント
-//- (void)didPanGesture:(UIPanGestureRecognizer*)sender {
+CGPoint lastTouchPoint;
+- (void)didPanGesture:(UIPanGestureRecognizer*)sender {
+    
+    //原点　viewの中心
+    CGPoint markPoint = selectedMarkView.center;
+    //NSLog(@"オブジェクト座標 x：%f　y：%f", markPoint.x, markPoint.y);
+
+    //タッチ座標を取得
+    CGPoint point = [sender locationInView:self.view];
+    
+    if (sender.state == UIGestureRecognizerStateBegan)
+        lastTouchPoint = point;
+        
+    //NSLog(@"最終タッチ座標 x：%f　y：%f", lastTouchPoint.x, lastTouchPoint.y);
+    //NSLog(@"タッチ座標 x：%f　y：%f", point.x, point.y);
+    
+    //座標の差を求める
+    //x,yに対して変化が大きい方を回転率として採用
+    float x = point.x - lastTouchPoint.x;
+    if (markPoint.y < point.y) {
+        x *= -1;
+    }
+    float y = point.y - lastTouchPoint.y;
+    if (markPoint.x > point.x) {
+        y *= -1;
+    }
+    float rotation;
+    if (fabs(x) > fabs(y))
+        rotation = x * 0.01;
+    else
+        rotation = y * 0.01;
+    
+    //変化した値分回転
+    selectedMarkView.transform = CGAffineTransformRotate(selectedMarkView.transform,rotation);
+
+//    float x1 = point.x - markPoint.x;
+//    float y1 = -(point.y - markPoint.y);
 //    
-//    //原点　viewの中心
-//    CGPoint org = selectedMarkView.center;
-//    NSLog(@"オブジェクト座標 x：%f　y：%f", org.x, org.y);
+//    float x2 = lastTouchPoint.x - markPoint.x;
+//    float y2 = -(lastTouchPoint.y - markPoint.y);
 //    
-//    //タッチ座標を取得
-//    CGPoint point = [sender translationInView:sender.view];
-//    NSLog(@"タッチ座標 x：%f　y：%f", point.x, point.y);
+//    // 距離rを求める
+//    float r1 = sqrt((x1 * x1) + (y1 * y1));
+//    float r2 = sqrt((x2 * x2) + (y2 * y2));
+//    //NSLog(@"距離：%f", r);
 //    
-//    //座標の差を求める 画面の上側をY座標＋とするので、Y座標は符号を入れ替える
-//    float x = point.x - org.x;
-//    float y = -(point.y - org.y);
-//    
-//    //角度radianを求める
-//    float radian = atan2f(y, x);
-//    
-////    // radianに補正をする
-////    if(radian < 0) {
-////        radian = radian +2*M_PI;
-////    }
-//    
-//    //度に変換
-//    float degree = radian *360 /(2*M_PI);
-//    NSLog(@"ラジアン：%f　度：%f", radian, degree);
+//    float scale;
+//    if (r1 >= r2)
+//        scale = 1.01;
+//    else
+//        scale = 0.99;
 //
-//    //selectedMarkView.transform = CGAffineTransformRotate(selectedMarkView.transform,);
-//    //selectedMarkView.transform = CGAffineTransformMakeRotation(radian);
 //    
-//    //[sender setTranslation:CGPointZero inView:self.view];
-//}
+//    //変化した値分拡大
+//    selectedMarkView.transform = CGAffineTransformScale(selectedMarkView.transform, scale, scale);
+    
+    //最終タッチ座標を保持
+    lastTouchPoint = point;
+    
+    //累積値を初期化
+    [sender setTranslation:CGPointZero inView:self.view];
+}
 
 //選択中のオブジェクトを設定
 - (void)selectedMarkObject:(UIView*)selectView {
