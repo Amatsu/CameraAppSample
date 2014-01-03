@@ -16,6 +16,14 @@
 - (IBAction)back:(id)sender;
 - (IBAction)saveImage:(id)sender;
 - (IBAction)showPhotoList:(id)sender;
-- (IBAction)choiceFukidashi:(id)sender;
+//- (IBAction)choiceFukidashi:(id)sender;
+//- (IBAction)choiceColorRed:(id)sender;
+//- (IBAction)choiceColorBlue:(id)sender;
+- (IBAction)choiceFukidashi1:(id)sender;
+- (IBAction)choiceFukidashi2:(id)sender;
+- (IBAction)choiceFukidashi3:(id)sender;
+- (IBAction)choiceFukidashi4:(id)sender;
+- (IBAction)choiceFukidashi5:(id)sender;
+- (IBAction)choiceFukidashi6:(id)sender;
 
 @end
