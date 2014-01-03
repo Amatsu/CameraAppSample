@@ -184,17 +184,37 @@ CGPoint lastTouchPoint;
        
         //タッチ座標を取得
         CGPoint point = [sender locationInView:self.view];
-             
+        
+        
         if (sender.state == UIGestureRecognizerStateBegan){
             lastTouchPoint = point;
-        }
-        
-        
-        
-        if (sender.state == UIGestureRecognizerStateEnded) {
+            UIView *tmpView = [[UIView alloc] initWithFrame:CGRectMake(point.x,
+                                                                         point.y,
+                                                                         fabsf([sender translationInView:sender.view].x),
+                                                                         fabsf([sender translationInView:sender.view].y))];
+            [self.printScreenImageView addSubview:tmpView];
+            [self selectedMarkObject:tmpView];
+            
+        } else if (sender.state == UIGestureRecognizerStateEnded) {
+            
+            //サイズ確認用に一時作成したtmpViewフレームを削除
+            if (selectedMarkView != nil) {
+                [selectedMarkView removeFromSuperview];
+            }
+            
+            //吹き出しの設置座業を算出
+            float x = lastTouchPoint.x;
+            float y = lastTouchPoint.y;
+            if (point.x < x)
+                x = point.x;
+            if (point.y < y)
+                y = point.y;
             
             markCnt += 1;
-            UIView *fukidashi = [[UIView alloc] initWithFrame:CGRectMake(lastTouchPoint.x,lastTouchPoint.y,[sender translationInView:sender.view].x,[sender translationInView:sender.view].y)];
+            UIView *fukidashi = [[UIView alloc] initWithFrame:CGRectMake(x,
+                                                                         y,
+                                                                         fabsf([sender translationInView:sender.view].x),
+                                                                         fabsf([sender translationInView:sender.view].y))];
             fukidashi.clipsToBounds = true;
             fukidashi.tag = markCnt;
             
@@ -269,8 +289,25 @@ CGPoint lastTouchPoint;
             UIPanGestureRecognizer *markPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(didMarkPanGesture:)];
             [fukidashi addGestureRecognizer:markPanGesture];
             
+            //選択中オブジェクトに設定
+            [self selectedMarkObject:fukidashi];
             //選択なし
             choiceObjNm = nil;
+            
+        } else {
+            //吹き出しの設置座業を算出
+            float x = lastTouchPoint.x;
+            float y = lastTouchPoint.y;
+            if (point.x < x)
+                x = point.x;
+            if (point.y < y)
+                y = point.y;
+            
+//            CGRect original = selectedMarkView.frame;
+            selectedMarkView.frame = CGRectMake(x,
+                                                y,
+                                                fabsf([sender translationInView:sender.view].x),
+                                                fabsf([sender translationInView:sender.view].y));
         }
         
     }else {

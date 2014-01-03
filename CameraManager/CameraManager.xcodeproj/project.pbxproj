@@ -34,6 +34,7 @@
 		CDB43EE91876FFFD00E0BF1E /* fukidashi3.png in Resources */ = {isa = PBXBuildFile; fileRef = CDB43EE71876FFFD00E0BF1E /* fukidashi3.png */; };
 		CDB43EEC187701EB00E0BF1E /* fukidashi4.png in Resources */ = {isa = PBXBuildFile; fileRef = CDB43EEA187701EB00E0BF1E /* fukidashi4.png */; };
 		CDB43EED187701EB00E0BF1E /* fukidashi2.png in Resources */ = {isa = PBXBuildFile; fileRef = CDB43EEB187701EB00E0BF1E /* fukidashi2.png */; };
+		CDB43EF018771CA000E0BF1E /* microphone.png in Resources */ = {isa = PBXBuildFile; fileRef = CDB43EEF18771CA000E0BF1E /* microphone.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		CDB43EE71876FFFD00E0BF1E /* fukidashi3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidashi3.png; sourceTree = "<group>"; };
 		CDB43EEA187701EB00E0BF1E /* fukidashi4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidashi4.png; sourceTree = "<group>"; };
 		CDB43EEB187701EB00E0BF1E /* fukidashi2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidashi2.png; sourceTree = "<group>"; };
+		CDB43EEF18771CA000E0BF1E /* microphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = microphone.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 		CD9B3088184AA0D8002E47AF /* CameraManager */ = {
 			isa = PBXGroup;
 			children = (
+				CDB43EEE18771C9300E0BF1E /* image */,
 				CDB43EE51876FFCF00E0BF1E /* fukidashi */,
 				CD655DBE185F5AC300CC08C9 /* PhotoListTabBarController.h */,
 				CD655DBC185F5AA600CC08C9 /* PhotoListTabBarController.m */,
@@ -217,6 +220,14 @@
 				CDB43EE71876FFFD00E0BF1E /* fukidashi3.png */,
 			);
 			name = fukidashi;
+			sourceTree = "<group>";
+		};
+		CDB43EEE18771C9300E0BF1E /* image */ = {
+			isa = PBXGroup;
+			children = (
+				CDB43EEF18771CA000E0BF1E /* microphone.png */,
+			);
+			name = image;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +309,7 @@
 				CD9B30CC185BDF2F002E47AF /* icon-60@2x.png in Resources */,
 				CD9B309B184AA0D8002E47AF /* Images.xcassets in Resources */,
 				CDB43EE81876FFFD00E0BF1E /* fukidashi1.png in Resources */,
+				CDB43EF018771CA000E0BF1E /* microphone.png in Resources */,
 				CDB43EE91876FFFD00E0BF1E /* fukidashi3.png in Resources */,
 				CDB43EED187701EB00E0BF1E /* fukidashi2.png in Resources */,
 				CD9B308D184AA0D8002E47AF /* InfoPlist.strings in Resources */,

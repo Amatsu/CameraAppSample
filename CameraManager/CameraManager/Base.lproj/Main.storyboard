@@ -189,18 +189,6 @@
                                             <action selector="choiceFukidashi2:" destination="XuK-Zm-g9k" eventType="touchUpInside" id="GOY-5v-RYN"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" alpha="0.89999997615814209" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VJT-l3-Ygg">
-                                        <rect key="frame" x="110" y="12" width="44" height="39"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.88546620239999996" green="0.3796470099" blue="0.43194406010000003" alpha="0.0" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="HiraKakuProN-W6" family="Hiragino Kaku Gothic ProN" pointSize="15"/>
-                                        <state key="normal" backgroundImage="fukidashi3.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="choiceFukidashi3:" destination="XuK-Zm-g9k" eventType="touchUpInside" id="yYF-ms-IjP"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" alpha="0.89999997615814209" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whV-tu-sb0">
                                         <rect key="frame" x="162" y="12" width="44" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -237,6 +225,16 @@
                                         </state>
                                         <connections>
                                             <action selector="choiceFukidashi6:" destination="XuK-Zm-g9k" eventType="touchUpInside" id="iPE-oh-cuf"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fx0-VH-KI9">
+                                        <rect key="frame" x="110" y="13" width="44" height="39"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" backgroundImage="fukidashi3.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="choiceFukidashi3:" destination="XuK-Zm-g9k" eventType="touchUpInside" id="Oqm-2M-MKL"/>
                                         </connections>
                                     </button>
                                 </subviews>

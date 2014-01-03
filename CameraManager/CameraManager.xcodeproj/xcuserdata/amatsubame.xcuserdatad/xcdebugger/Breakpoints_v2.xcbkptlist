@@ -486,11 +486,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CameraManager/PrintScreenViewController.m"
-            timestampString = "410458799.505566"
+            timestampString = "410462402.133133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "367"
-            endingLineNumber = "367"
+            startingLineNumber = "407"
+            endingLineNumber = "407"
             landmarkName = "-didMarkPanGesture:"
             landmarkType = "5">
          </BreakpointContent>
@@ -502,11 +502,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CameraManager/PrintScreenViewController.m"
-            timestampString = "410458799.505566"
+            timestampString = "410462402.133133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "388"
-            endingLineNumber = "388"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
             landmarkName = "-textFieldShouldReturn:"
             landmarkType = "5">
          </BreakpointContent>
@@ -534,11 +534,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CameraManager/PrintScreenViewController.m"
-            timestampString = "410458799.505566"
+            timestampString = "410462402.133133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
+            landmarkName = "-didPanGesture:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CameraManager/PrintScreenViewController.m"
+            timestampString = "410462402.133133"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
             landmarkName = "-didPanGesture:"
             landmarkType = "5">
          </BreakpointContent>
