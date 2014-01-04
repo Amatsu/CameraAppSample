@@ -26,5 +26,6 @@
 - (IBAction)toggleLight:(id)sender;
 - (IBAction)toggleCamera:(id)sender;
 - (IBAction)toggleSilentMode:(id)sender;
+- (IBAction)showPhotoList:(id)sender;
 
 @end

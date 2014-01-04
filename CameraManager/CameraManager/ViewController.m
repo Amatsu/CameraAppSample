@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "PrintScreenViewController.h"
+#import "PhotoListViewController.h"
 
 @interface ViewController ()<UIGestureRecognizerDelegate>
 @end
@@ -147,6 +148,12 @@ float effectiveScale;
 //シャッター音あり/シャッター音なし
 - (IBAction)toggleSilentMode:(id)sender {
     [self.cameraManager silentModeToggle];
+}
+
+//写真一覧を表示
+- (IBAction)showPhotoList:(id)sender {
+    PhotoListViewController *photoListView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PhotoListViewController"];
+    [self presentViewController:photoListView animated:YES completion:nil];
 }
 
 #pragma mark - その他画面設定

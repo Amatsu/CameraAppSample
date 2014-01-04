@@ -397,7 +397,7 @@ CGPoint lastTouchPoint;
     //選択中のオブジェクトを設定
     [self selectedMarkObject:sender.view];
     
-    NSLog(@"吹き出しがタッチされました。%d",sender.view.tag);
+    //NSLog(@"吹き出しがタッチされました。%d",sender.view.tag);
 }
 //マークパンイベント（ドラッグ）
 - (void)didMarkPanGesture:(UIPanGestureRecognizer*)sender
@@ -418,7 +418,25 @@ CGPoint lastTouchPoint;
     // 今回のようなドラッグに合わせてImageを動かしたい場合には、蓄積値をゼロにする
     [sender setTranslation:CGPointZero inView:self.view];
     
-    NSLog(@"吹き出しがドラッグされました。%d",sender.view.tag);
+    //NSLog(@"吹き出しがドラッグされました。%d",sender.view.tag);
+    
+    //イベント終了時にゴミ箱Viewに重なっている場合は選択されているViewを削除する。
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        //NSLog(@"selectedMarkView:%@",NSStringFromCGRect(selectedMarkView.frame));
+        //NSLog(@"trashImgView:%@",NSStringFromCGRect(self.trashImgView.frame));
+        CGRect checkFrame = CGRectMake(selectedMarkView.frame.origin.x + selectedMarkView.frame.size.width / 2,
+                                       selectedMarkView.frame.origin.y + selectedMarkView.frame.size.height / 2,
+                                       50,
+                                       50);
+        
+        //ゴミ箱に移動されたかを判定
+        if (CGRectIntersectsRect(checkFrame, self.btnTrash.frame)){
+            //ゴミ箱に重なったので該当レイヤを削除し、選択オブジェクトを破棄
+            [selectedMarkView removeFromSuperview];
+            [self selectedMarkObject:nil];
+            //NSLog(@"重なりを検出しました。");
+        }
+    }
 }
 
 //キーボード非表示
@@ -510,13 +528,6 @@ CGPoint lastTouchPoint;
     return img;
 }
 
-//一覧表示
-- (IBAction)showPhotoList:(id)sender {
-    //StoryboardからViewControllerを呼び出し
-    PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PhotoListTabController"];
-    [self presentViewController:prtScrView animated:YES completion:nil];
-}
-
 //UUIDを利用しランダムのファイル名を用意
 - (NSString*) stringWithUUID {
     CFUUIDRef uuidObj = CFUUIDCreate(nil);//create a new UUID
@@ -539,6 +550,14 @@ CGPoint lastTouchPoint;
                                           cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
 }
+
+//一覧へ遷移
+//- (IBAction)showPhotoList:(id)sender {
+//    //StoryboardからViewControllerを呼び出し
+//    PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PhotoListViewController"];
+//    [self presentViewController:prtScrView animated:YES completion:nil];
+//}
+
 
 #pragma mark - 吹出関連
 //吹出を選択

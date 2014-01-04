@@ -12,10 +12,10 @@
 
 @property (weak, nonatomic) UIImage* printScreenImage;
 @property (weak, nonatomic) IBOutlet UIImageView *printScreenImageView;
+@property (weak, nonatomic) IBOutlet UIButton *btnTrash;
 
 - (IBAction)back:(id)sender;
 - (IBAction)saveImage:(id)sender;
-- (IBAction)showPhotoList:(id)sender;
 - (IBAction)choiceFukidashi1:(id)sender;
 - (IBAction)choiceFukidashi2:(id)sender;
 - (IBAction)choiceFukidashi3:(id)sender;

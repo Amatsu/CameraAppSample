@@ -192,7 +192,7 @@ BOOL adjustingExposure;
                         options:NSKeyValueObservingOptionNew
                         context:nil];
             [device unlockForConfiguration];
-            NSLog(@"2:%d",device.adjustingExposure);
+            //NSLog(@"2:%d",device.adjustingExposure);
             
         }
     }
@@ -207,9 +207,9 @@ BOOL adjustingExposure;
     if (!adjustingExposure) {
         return;
     }
-    NSLog(@"3:%d",device.adjustingExposure);
+    //NSLog(@"3:%d",device.adjustingExposure);
     if ([keyPath isEqual:@"adjustingExposure"]) {
-        NSLog(@"4:%d",device.adjustingExposure);
+        //NSLog(@"4:%d",device.adjustingExposure);
         if ([[change objectForKey:NSKeyValueChangeNewKey] boolValue] == NO) {
             adjustingExposure = NO;
             NSError *error = nil;
