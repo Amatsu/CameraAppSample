@@ -201,7 +201,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" alpha="0.89999997615814209" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whV-tu-sb0">
-                                        <rect key="frame" x="162" y="12" width="44" height="39"/>
+                                        <rect key="frame" x="217" y="13" width="44" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.88546620239999996" green="0.3796470099" blue="0.43194406010000003" alpha="0.0" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="HiraKakuProN-W6" family="Hiragino Kaku Gothic ProN" pointSize="15"/>
@@ -213,11 +213,10 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NMe-AA-pJG">
-                                        <rect key="frame" x="214" y="9" width="47" height="46"/>
+                                        <rect key="frame" x="269" y="10" width="47" height="46"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.96464445153061229" green="0.0" blue="0.041842453140078707" alpha="1" colorSpace="calibratedRGB"/>
                                         <size key="titleShadowOffset" width="0.5" height="0.5"/>
-                                        <state key="normal" title="Red">
+                                        <state key="normal" backgroundImage="fukidashi5.png">
                                             <color key="titleColor" red="0.98863636363636365" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" red="0.78890306122448983" green="0.64330034161074778" blue="0.6766242025089082" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -226,11 +225,10 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UHq-F2-CWE">
-                                        <rect key="frame" x="269" y="9" width="47" height="46"/>
+                                        <rect key="frame" x="110" y="13" width="47" height="46"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.1083707625" blue="0.9646444515" alpha="1" colorSpace="calibratedRGB"/>
                                         <size key="titleShadowOffset" width="0.5" height="0.5"/>
-                                        <state key="normal" title="Blue">
+                                        <state key="normal" backgroundImage="fukidashi6.png">
                                             <color key="titleColor" red="0.98863636363636365" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" red="0.78890306122448983" green="0.64330034161074778" blue="0.6766242025089082" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -239,7 +237,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fx0-VH-KI9">
-                                        <rect key="frame" x="110" y="13" width="44" height="39"/>
+                                        <rect key="frame" x="165" y="14" width="44" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" backgroundImage="fukidashi3.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -338,6 +336,8 @@
         <image name="fukidashi2.png" width="300" height="298"/>
         <image name="fukidashi3.png" width="300" height="158"/>
         <image name="fukidashi4.png" width="300" height="285"/>
+        <image name="fukidashi5.png" width="214" height="144"/>
+        <image name="fukidashi6.png" width="300" height="158"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

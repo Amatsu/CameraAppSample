@@ -114,16 +114,22 @@ NSInteger markCnt = 0;
             fukidashi.alpha  = 0.8;
         }
         if ([choiceObjNm isEqual: MARK_FUKIDASHI_5]){
-            fukidashi.layer.cornerRadius = 20;
-            fukidashi.backgroundColor  = [UIColor redColor];
+            UIGraphicsBeginImageContext(fukidashi.bounds.size);
+            [[UIImage imageNamed:@"fukidashi5.png"] drawInRect:fukidashi.bounds];
+            UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
+            msg.textColor = [UIColor blackColor];
             fukidashi.alpha  = 0.8;
-            msg.textColor = [UIColor whiteColor];
         }
         if ([choiceObjNm isEqual: MARK_FUKIDASHI_6]){
-            fukidashi.layer.cornerRadius = 20;
-            fukidashi.backgroundColor  = [UIColor blueColor];
+            UIGraphicsBeginImageContext(fukidashi.bounds.size);
+            [[UIImage imageNamed:@"fukidashi6.png"] drawInRect:fukidashi.bounds];
+            UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
+            msg.textColor = [UIColor blackColor];
             fukidashi.alpha  = 0.8;
-            msg.textColor = [UIColor whiteColor];
         }
         
         //サブビューとして追加
@@ -268,16 +274,22 @@ CGPoint lastTouchPoint;
                 fukidashi.alpha  = 0.8;
             }
             if ([choiceObjNm isEqual: MARK_FUKIDASHI_5]){
-                fukidashi.layer.cornerRadius = 20;
-                fukidashi.backgroundColor  = [UIColor redColor];
+                UIGraphicsBeginImageContext(fukidashi.bounds.size);
+                [[UIImage imageNamed:@"fukidashi5.png"] drawInRect:fukidashi.bounds];
+                UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+                fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
+                msg.textColor = [UIColor blackColor];
                 fukidashi.alpha  = 0.8;
-                msg.textColor = [UIColor whiteColor];
             }
             if ([choiceObjNm isEqual: MARK_FUKIDASHI_6]){
-                fukidashi.layer.cornerRadius = 20;
-                fukidashi.backgroundColor  = [UIColor blueColor];
+                UIGraphicsBeginImageContext(fukidashi.bounds.size);
+                [[UIImage imageNamed:@"fukidashi6.png"] drawInRect:fukidashi.bounds];
+                UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+                fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
+                msg.textColor = [UIColor blackColor];
                 fukidashi.alpha  = 0.8;
-                msg.textColor = [UIColor whiteColor];
             }
             
             //サブビューとして追加
