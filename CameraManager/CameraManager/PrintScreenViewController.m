@@ -16,8 +16,6 @@
 
 //選択中のオブジェクト名称
 NSString *choiceObjNm;
-////選択中の色
-//NSString *choiceColor;
 //選択中のマークView
 UIView *selectedMarkView;
 
@@ -52,6 +50,32 @@ NSInteger markCnt = 0;
     //UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinchGesture:)];
     //[self.printScreenImageView addGestureRecognizer:pinchGesture];
     
+    
+    //アルバムを作製
+    //ALAssetLibraryのインスタンスを作成
+    _library = [[ALAssetsLibrary alloc] init];
+    _AlbumName = @"TestAppPhoto";
+    _albumWasFound = FALSE;
+    //アルバムを検索してなかったら新規作成、あったらアルバムのURLを保持
+    [_library enumerateGroupsWithTypes:ALAssetsGroupAlbum
+                            usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+                                if (group) {
+                                    if ([_AlbumName compare:[group valueForProperty:ALAssetsGroupPropertyName]] == NSOrderedSame) {
+                                        //URLをクラスインスタンスに保持
+                                        _groupURL = [group valueForProperty:ALAssetsGroupPropertyURL];
+                                        _albumWasFound = TRUE;
+                                    }else if (_albumWasFound==FALSE) {
+                                        ALAssetsLibraryGroupResultBlock resultBlock = ^(ALAssetsGroup *group) {
+                                            _groupURL = [group valueForProperty:ALAssetsGroupPropertyURL];
+                                        };
+                                        //新しいアルバムを作成
+                                        [_library addAssetsGroupAlbumWithName:_AlbumName
+                                                                  resultBlock:resultBlock
+                                                                 failureBlock: nil];
+                                        _albumWasFound = TRUE;
+                                    }
+                                }
+                            } failureBlock:nil];
 }
 
 #pragma mark - イベント関連
@@ -314,8 +338,6 @@ CGPoint lastTouchPoint;
                 x = point.x;
             if (point.y < y)
                 y = point.y;
-            
-//            CGRect original = selectedMarkView.frame;
             selectedMarkView.frame = CGRectMake(x,
                                                 y,
                                                 fabsf([sender translationInView:sender.view].x),
@@ -482,15 +504,40 @@ CGPoint lastTouchPoint;
     UIImage* img = [self convertUIImage:self.printScreenImageView];
     
     //ファイル名を設定
-     [UIImage imageNamed:[NSString stringWithFormat:@"%@.jpg", [self stringWithUUID]]];
+    //[UIImage imageNamed:[NSString stringWithFormat:@"%@.jpg", [self stringWithUUID]]];
     
-    //アプリを使用して保存した画像と認識させるため、DBへ保存（ファイル名やコメント等の画像以外の付属情報）
-    //TODO
+    //カメラロールにUIImageを保存する。保存完了後、completionBlockで「NSURL* assetURL」が取得できる
+    [_library writeImageToSavedPhotosAlbum:img.CGImage
+                               orientation:(ALAssetOrientation)img.imageOrientation
+                           completionBlock:^(NSURL* assetURL, NSError* error) {
+                               //アルバムにALAssetを追加するメソッド
+                               [self addAssetURL:assetURL
+                                        AlbumURL:_groupURL];
+                               NSLog(@"%@",assetURL);
+                           }];
     
-    //フォトアルバムに保存
-    UIImageWriteToSavedPhotosAlbum(img,
-                                   self,
-                                   @selector(savingImageIsFinished:didFinishSavingWithError:contextInfo:), nil);
+}
+
+//アルバムにALAssetを追加するメソッド
+- (void)addAssetURL:(NSURL*)assetURL AlbumURL:(NSURL *)albumURL{
+    
+    //URLからGroupを取得
+    [_library groupForURL:albumURL
+              resultBlock:^(ALAssetsGroup *group){
+                  //URLからALAssetを取得
+                  [_library assetForURL:assetURL
+                            resultBlock:^(ALAsset *asset) {
+                                if (group.editable) {
+                                    //GroupにAssetを追加
+                                    [group addAsset:asset];
+                                    // Alertを表示する
+                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                                                    message:@"保存しました" delegate:nil
+                                                                          cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                                    [alert show];
+                                }
+                            } failureBlock: nil];
+              } failureBlock:nil];
 }
 
 //画像合成
@@ -541,27 +588,14 @@ CGPoint lastTouchPoint;
 }
 
 //UUIDを利用しランダムのファイル名を用意
-- (NSString*) stringWithUUID {
-    CFUUIDRef uuidObj = CFUUIDCreate(nil);//create a new UUID
-    //get the string representation of the UUID
-    NSString *uuidString = (NSString*)CFBridgingRelease(CFUUIDCreateString(nil, uuidObj));
-    CFRelease(uuidObj);
-    return uuidString;
-}
+//- (NSString*) stringWithUUID {
+//    CFUUIDRef uuidObj = CFUUIDCreate(nil);//create a new UUID
+//    //get the string representation of the UUID
+//    NSString *uuidString = (NSString*)CFBridgingRelease(CFUUIDCreateString(nil, uuidObj));
+//    CFRelease(uuidObj);
+//    return uuidString;
+//}
 
-
-// 保存が完了したら呼ばれるメソッド
--(void)savingImageIsFinished:(UIImage*)image
-
-    didFinishSavingWithError:(NSError*)error contextInfo:(void*)contextInfo{
-    
-    
-    // Alertを表示する
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                    message:@"保存しました" delegate:nil
-                                          cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-    [alert show];
-}
 
 //一覧へ遷移
 //- (IBAction)showPhotoList:(id)sender {
@@ -572,19 +606,6 @@ CGPoint lastTouchPoint;
 
 
 #pragma mark - 吹出関連
-//吹出を選択
-//- (IBAction)choiceFukidashi:(id)sender {
-//    choiceObjNm = MARK_FUKIDASHI;
-//}
-//
-//- (IBAction)choiceColorRed:(id)sender {
-//    choiceColor = @"RED";
-//}
-//
-//- (IBAction)choiceColorBlue:(id)sender {
-//    choiceColor = @"BLUE";
-//}
-
 - (IBAction)choiceFukidashi1:(id)sender {
     choiceObjNm = MARK_FUKIDASHI_1;
 }

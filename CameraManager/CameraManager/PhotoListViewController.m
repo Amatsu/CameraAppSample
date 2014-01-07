@@ -9,6 +9,7 @@
 #import "PhotoListViewController.h"
 #import "ViewController.h"
 
+
 @interface PhotoListViewController ()
 
 @end
@@ -31,7 +32,39 @@
     
     //タブバーのデリゲート処理を設定
     self.menuTabBar.delegate = self;
+    
+    // アルバム情報の取得
+    library_ = [[ALAssetsLibrary alloc] init];
+    [library_ enumerateGroupsWithTypes:ALAssetsGroupAll
+                            usingBlock:groupBlock
+                          failureBlock:^(NSError *error){
+                                            NSLog(@"Error:%@",error);
+                                        }
+     ];
+    
 }
+
+// アルバム情報取得ブロック
+ALAssetsLibraryGroupsEnumerationResultsBlock groupBlock =
+^(ALAssetsGroup *assetsGroup, BOOL *stop) {
+    if (assetsGroup) {
+        // アルバムの代表的な情報を表示
+        UIImage *image = [UIImage imageWithCGImage:[assetsGroup posterImage]];
+
+        // アルバム情報の各種項目を取得
+        NSString *groupName = [assetsGroup valueForProperty:ALAssetsGroupPropertyName];
+        NSString *groupID = [assetsGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
+        NSString *groupType = [assetsGroup valueForProperty:ALAssetsGroupPropertyType];
+        NSString *groupURL = [assetsGroup valueForProperty:ALAssetsGroupPropertyURL];
+
+        // ログに表示
+        NSLog(@"group:%@",assetsGroup);
+        NSLog(@"groupName:%@",groupName);
+        NSLog(@"groupID:%@",groupID);
+        NSLog(@"groupType:%@",groupType);
+        NSLog(@"groupURL:%@",groupURL);
+    };
+};
 
 - (void)didReceiveMemoryWarning
 {

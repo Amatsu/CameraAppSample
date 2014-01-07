@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
-@interface PrintScreenViewController : UIViewController
+@interface PrintScreenViewController : UIViewController{
+    ALAssetsLibrary *_library;
+    NSURL *_groupURL;
+    NSString *_AlbumName;
+    BOOL _albumWasFound;
+}
 
 @property (weak, nonatomic) UIImage* printScreenImage;
 @property (weak, nonatomic) IBOutlet UIImageView *printScreenImageView;

@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
-@interface PhotoListViewController : UIViewController<UITabBarDelegate>
+@interface PhotoListViewController : UIViewController<UITabBarDelegate> {
+    ALAssetsLibrary *library_;
+}
 
 //メニュータブバー
 @property (weak, nonatomic) IBOutlet UITabBar *menuTabBar;
