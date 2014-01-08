@@ -55,7 +55,7 @@ NSInteger markCnt = 0;
     //ALAssetLibraryのインスタンスを作成
     _library = [[ALAssetsLibrary alloc] init];
     _AlbumName = @"TestAppPhoto";
-    _albumWasFound = FALSE;
+
     //アルバムを検索してなかったら新規作成、あったらアルバムのURLを保持
     [_library enumerateGroupsWithTypes:ALAssetsGroupAlbum
                             usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
@@ -63,19 +63,22 @@ NSInteger markCnt = 0;
                                     if ([_AlbumName compare:[group valueForProperty:ALAssetsGroupPropertyName]] == NSOrderedSame) {
                                         //URLをクラスインスタンスに保持
                                         _groupURL = [group valueForProperty:ALAssetsGroupPropertyURL];
-                                        _albumWasFound = TRUE;
-                                    }else if (_albumWasFound==FALSE) {
+                                    }
+                                } else {
+                                    if (_groupURL == nil) {
                                         ALAssetsLibraryGroupResultBlock resultBlock = ^(ALAssetsGroup *group) {
                                             _groupURL = [group valueForProperty:ALAssetsGroupPropertyURL];
                                         };
+                                        
                                         //新しいアルバムを作成
                                         [_library addAssetsGroupAlbumWithName:_AlbumName
                                                                   resultBlock:resultBlock
                                                                  failureBlock: nil];
-                                        _albumWasFound = TRUE;
                                     }
                                 }
                             } failureBlock:nil];
+    
+    
 }
 
 #pragma mark - イベント関連
@@ -530,11 +533,11 @@ CGPoint lastTouchPoint;
                                 if (group.editable) {
                                     //GroupにAssetを追加
                                     [group addAsset:asset];
-                                    // Alertを表示する
-                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                                                    message:@"保存しました" delegate:nil
-                                                                          cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-                                    [alert show];
+                                    
+                                    //一覧を表示
+                                    PhotoListViewController *photoListView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PhotoListViewController"];
+                                    [self presentViewController:photoListView animated:YES completion:nil];
+                                    
                                 }
                             } failureBlock: nil];
               } failureBlock:nil];

@@ -9,11 +9,17 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface PhotoListViewController : UIViewController<UITabBarDelegate> {
-    ALAssetsLibrary *library_;
+#import "PhotoListCell.h"
+
+@interface PhotoListViewController : UIViewController<UITabBarDelegate,UITableViewDelegate, UITableViewDataSource> {
+    ALAssetsLibrary *_library;
+    NSURL *_groupURL;
+    NSString *_AlbumName;
+    NSMutableArray *_AlAssetsArr;
 }
 
 //メニュータブバー
 @property (weak, nonatomic) IBOutlet UITabBar *menuTabBar;
+@property (weak, nonatomic) IBOutlet UITableView *photoListTableView;
 
 @end

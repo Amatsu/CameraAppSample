@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "PhotoListViewController.h"
 
 @interface PrintScreenViewController : UIViewController{
     ALAssetsLibrary *_library;

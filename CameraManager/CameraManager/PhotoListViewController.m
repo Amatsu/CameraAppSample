@@ -33,38 +33,80 @@
     //タブバーのデリゲート処理を設定
     self.menuTabBar.delegate = self;
     
-    // アルバム情報の取得
-    library_ = [[ALAssetsLibrary alloc] init];
-    [library_ enumerateGroupsWithTypes:ALAssetsGroupAll
-                            usingBlock:groupBlock
-                          failureBlock:^(NSError *error){
-                                            NSLog(@"Error:%@",error);
-                                        }
-     ];
+    //ALAssetLibraryのインスタンスを作成
+    _library = [[ALAssetsLibrary alloc] init];
+    _AlbumName = @"TestAppPhoto";
+    _AlAssetsArr = [NSMutableArray array];
+    
+    //TableViewに関連付け
+    self.photoListTableView.delegate = self;
+    self.photoListTableView.dataSource = self;
+    
+    //アルバムを取得
+    [_library enumerateGroupsWithTypes:ALAssetsGroupAlbum
+                            usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+                                //ALAssetsLibraryのすべてのアルバムが列挙される
+                                if (group) {
+                                    //アルバム名が「_AlbumName」と同一だった時の処理
+                                    if ([_AlbumName compare:[group valueForProperty:ALAssetsGroupPropertyName]] == NSOrderedSame) {
+                                        //assetsEnumerationBlock
+                                        ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                                            if (result) {
+                                                //asset をNSMutableArraryに格納
+                                                [_AlAssetsArr addObject:result];
+                                            }else{
+                                                //データ取得後の処理
+                                                [self.photoListTableView reloadData];
+                                            }
+                                        };
+                                        //アルバム(group)からALAssetの取得       
+                                        [group enumerateAssetsUsingBlock:assetsEnumerationBlock];
+                                    }           
+                                }
+                            } failureBlock:nil];
+}
+
+//TalbeViewに写真一覧を表示
+- (void)showPhotoTableView {
     
 }
 
-// アルバム情報取得ブロック
-ALAssetsLibraryGroupsEnumerationResultsBlock groupBlock =
-^(ALAssetsGroup *assetsGroup, BOOL *stop) {
-    if (assetsGroup) {
-        // アルバムの代表的な情報を表示
-        UIImage *image = [UIImage imageWithCGImage:[assetsGroup posterImage]];
+//テーブルに含まれるセクションの数
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+//セクションに含まれる行の数
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [_AlAssetsArr count];
+}
 
-        // アルバム情報の各種項目を取得
-        NSString *groupName = [assetsGroup valueForProperty:ALAssetsGroupPropertyName];
-        NSString *groupID = [assetsGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
-        NSString *groupType = [assetsGroup valueForProperty:ALAssetsGroupPropertyType];
-        NSString *groupURL = [assetsGroup valueForProperty:ALAssetsGroupPropertyURL];
+//行に表示するデータの生成
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *CellIdentifier = @"PhotoCell";
+    PhotoListCell *cell = [self.photoListTableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    //ALAssetからサムネール画像を取得してUIImageに変換
+    UIImage *image = [UIImage imageWithCGImage:[[_AlAssetsArr objectAtIndex:indexPath.row] thumbnail]];
+    cell.photoImg.image = image;
+    
+    return cell;
+    
+}
 
-        // ログに表示
-        NSLog(@"group:%@",assetsGroup);
-        NSLog(@"groupName:%@",groupName);
-        NSLog(@"groupID:%@",groupID);
-        NSLog(@"groupType:%@",groupType);
-        NSLog(@"groupURL:%@",groupURL);
-    };
-};
+//Viewが表示される直前に実行される
+- (void)viewWillAppear:(BOOL)animated {
+    NSIndexPath* selection = [self.photoListTableView indexPathForSelectedRow];
+    if(selection){
+        [self.photoListTableView deselectRowAtIndexPath:selection animated:YES];
+    }
+    [self.photoListTableView reloadData];
+}
+
+//Viewが表示された直後に実行される
+- (void)viewDidAppear:(BOOL)animated {
+    [self.photoListTableView flashScrollIndicators];
+}
 
 - (void)didReceiveMemoryWarning
 {

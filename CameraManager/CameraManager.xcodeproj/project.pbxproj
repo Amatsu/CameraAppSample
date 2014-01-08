@@ -45,6 +45,7 @@
 		CDB43F0518784CFF00E0BF1E /* fukidashi5.png in Resources */ = {isa = PBXBuildFile; fileRef = CDB43F0318784CFF00E0BF1E /* fukidashi5.png */; };
 		CDB43F071879040A00E0BF1E /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDB43F061879040A00E0BF1E /* AssetsLibrary.framework */; };
 		CDB43F091879041200E0BF1E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDB43F081879041200E0BF1E /* ImageIO.framework */; };
+		CDB43F0C187D74B500E0BF1E /* PhotoListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB43F0B187D74B500E0BF1E /* PhotoListCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,8 @@
 		CDB43F0318784CFF00E0BF1E /* fukidashi5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidashi5.png; sourceTree = "<group>"; };
 		CDB43F061879040A00E0BF1E /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		CDB43F081879041200E0BF1E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		CDB43F0A187D74B500E0BF1E /* PhotoListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoListCell.h; sourceTree = "<group>"; };
+		CDB43F0B187D74B500E0BF1E /* PhotoListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoListCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +196,8 @@
 				CD9B30B8184AA488002E47AF /* CameraManager.m */,
 				CDB43EF11877B8C000E0BF1E /* PhotoListViewController.h */,
 				CDB43EF21877B8C000E0BF1E /* PhotoListViewController.m */,
+				CDB43F0A187D74B500E0BF1E /* PhotoListCell.h */,
+				CDB43F0B187D74B500E0BF1E /* PhotoListCell.m */,
 			);
 			path = CameraManager;
 			sourceTree = "<group>";
@@ -373,6 +378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDB43F0C187D74B500E0BF1E /* PhotoListCell.m in Sources */,
 				CD9B3099184AA0D8002E47AF /* ViewController.m in Sources */,
 				CD9B3093184AA0D8002E47AF /* AppDelegate.m in Sources */,
 				CD9B30B9184AA488002E47AF /* CameraManager.m in Sources */,
