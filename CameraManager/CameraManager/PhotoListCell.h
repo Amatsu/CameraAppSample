@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *photoImg;
 @property (weak, nonatomic) IBOutlet UILabel *lblComment;
+@property  NSURL *imageURL;
 
 @end

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "CameraManager.h"
-#import "PhotoListTabBarController.h"
 
 @interface ViewController : UIViewController<CameraManagerDelegate>
 //,PhotoListTabBarControllerDelegate

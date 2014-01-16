@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CD655DBD185F5AA600CC08C9 /* PhotoListTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD655DBC185F5AA600CC08C9 /* PhotoListTabBarController.m */; };
 		CD9B3083184AA0D8002E47AF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9B3082184AA0D8002E47AF /* Foundation.framework */; };
 		CD9B3085184AA0D8002E47AF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9B3084184AA0D8002E47AF /* CoreGraphics.framework */; };
 		CD9B3087184AA0D8002E47AF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9B3086184AA0D8002E47AF /* UIKit.framework */; };
@@ -46,6 +45,8 @@
 		CDB43F071879040A00E0BF1E /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDB43F061879040A00E0BF1E /* AssetsLibrary.framework */; };
 		CDB43F091879041200E0BF1E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDB43F081879041200E0BF1E /* ImageIO.framework */; };
 		CDB43F0C187D74B500E0BF1E /* PhotoListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB43F0B187D74B500E0BF1E /* PhotoListCell.m */; };
+		CDB43F0F1888091400E0BF1E /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB43F0E1888091400E0BF1E /* PhotoViewController.m */; };
+		CDB43F121888156700E0BF1E /* PhotoListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB43F111888156700E0BF1E /* PhotoListTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,8 +60,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CD655DBC185F5AA600CC08C9 /* PhotoListTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoListTabBarController.m; sourceTree = "<group>"; };
-		CD655DBE185F5AC300CC08C9 /* PhotoListTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoListTabBarController.h; sourceTree = "<group>"; };
 		CD9B307F184AA0D8002E47AF /* CameraManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CameraManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD9B3082184AA0D8002E47AF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CD9B3084184AA0D8002E47AF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -108,6 +107,10 @@
 		CDB43F081879041200E0BF1E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		CDB43F0A187D74B500E0BF1E /* PhotoListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoListCell.h; sourceTree = "<group>"; };
 		CDB43F0B187D74B500E0BF1E /* PhotoListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoListCell.m; sourceTree = "<group>"; };
+		CDB43F0D1888091400E0BF1E /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
+		CDB43F0E1888091400E0BF1E /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
+		CDB43F101888156700E0BF1E /* PhotoListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoListTableViewController.h; sourceTree = "<group>"; };
+		CDB43F111888156700E0BF1E /* PhotoListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoListTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,8 +184,6 @@
 			children = (
 				CDB43EEE18771C9300E0BF1E /* image */,
 				CDB43EE51876FFCF00E0BF1E /* fukidashi */,
-				CD655DBE185F5AC300CC08C9 /* PhotoListTabBarController.h */,
-				CD655DBC185F5AA600CC08C9 /* PhotoListTabBarController.m */,
 				CD9B30C51850A615002E47AF /* PrintScreenViewController.h */,
 				CD9B30C61850A615002E47AF /* PrintScreenViewController.m */,
 				CD9B3091184AA0D8002E47AF /* AppDelegate.h */,
@@ -198,6 +199,10 @@
 				CDB43EF21877B8C000E0BF1E /* PhotoListViewController.m */,
 				CDB43F0A187D74B500E0BF1E /* PhotoListCell.h */,
 				CDB43F0B187D74B500E0BF1E /* PhotoListCell.m */,
+				CDB43F0D1888091400E0BF1E /* PhotoViewController.h */,
+				CDB43F0E1888091400E0BF1E /* PhotoViewController.m */,
+				CDB43F101888156700E0BF1E /* PhotoListTableViewController.h */,
+				CDB43F111888156700E0BF1E /* PhotoListTableViewController.m */,
 			);
 			path = CameraManager;
 			sourceTree = "<group>";
@@ -382,8 +387,9 @@
 				CD9B3099184AA0D8002E47AF /* ViewController.m in Sources */,
 				CD9B3093184AA0D8002E47AF /* AppDelegate.m in Sources */,
 				CD9B30B9184AA488002E47AF /* CameraManager.m in Sources */,
-				CD655DBD185F5AA600CC08C9 /* PhotoListTabBarController.m in Sources */,
+				CDB43F121888156700E0BF1E /* PhotoListTableViewController.m in Sources */,
 				CDB43EF31877B8C000E0BF1E /* PhotoListViewController.m in Sources */,
+				CDB43F0F1888091400E0BF1E /* PhotoViewController.m in Sources */,
 				CD9B30C71850A615002E47AF /* PrintScreenViewController.m in Sources */,
 				CD9B308F184AA0D8002E47AF /* main.m in Sources */,
 			);

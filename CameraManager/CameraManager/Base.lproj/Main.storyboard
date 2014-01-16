@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="uEz-4z-PLa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="G24-Eq-It9">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -121,7 +121,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1726" y="-1096"/>
+            <point key="canvasLocation" x="-1707" y="-444"/>
         </scene>
         <!--Print Screen View Controller-->
         <scene sceneID="IIY-3N-kOd">
@@ -259,100 +259,141 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UwB-lv-jhK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1331" y="-1096"/>
+            <point key="canvasLocation" x="-1312" y="-444"/>
         </scene>
-        <!--Photo List View Controller-->
-        <scene sceneID="Vv6-4X-EBk">
+        <!--Photo View Controller-->
+        <scene sceneID="XeR-JJ-WMZ">
             <objects>
-                <viewController storyboardIdentifier="PhotoListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uEz-4z-PLa" customClass="PhotoListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="a2Z-yl-e15" customClass="PhotoViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="TYG-3Y-yKA"/>
-                        <viewControllerLayoutGuide type="bottom" id="bcf-T7-VjS"/>
+                        <viewControllerLayoutGuide type="top" id="5ag-IR-Zz0"/>
+                        <viewControllerLayoutGuide type="bottom" id="uPw-rb-iT7"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="weO-1A-Ise">
+                    <view key="view" contentMode="scaleToFill" id="IA6-mU-ccE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" rowHeight="65" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="QiB-qK-HNs">
-                                <rect key="frame" x="0.0" y="65" width="320" height="454"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4BA-7E-Gv0">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="separatorColor" red="0.88026509910431883" green="0.86852932969724794" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="PhotoCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="PhotoCell" rowHeight="65" id="HzS-qQ-3qC" customClass="PhotoListCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="65"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HzS-qQ-3qC" id="Rxp-wS-dw6">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DIb-Td-g1R">
-                                                    <rect key="frame" x="0.0" y="-9" width="75" height="74"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                </imageView>
-                                                <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fukidashi3.png" translatesAutoresizingMaskIntoConstraints="NO" id="g30-Em-8gk">
-                                                    <rect key="frame" x="78" y="2" width="203" height="63"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rkz-f8-4gB">
-                                                    <rect key="frame" x="289" y="-7" width="31" height="75"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="0.88546620239999996" green="0.3796470099" blue="0.43194406010000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ひとこと" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ktc-0Z-JLW">
-                                                    <rect key="frame" x="88" y="17" width="183" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="lblComment" destination="ktc-0Z-JLW" id="913-R5-5TX"/>
-                                            <outlet property="photoImg" destination="DIb-Td-g1R" id="iiC-MA-3Tc"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                                <sections/>
-                            </tableView>
-                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JQr-RG-FtV">
-                                <rect key="frame" x="0.0" y="519" width="320" height="49"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.048095160966306956" blue="0.26518654336734693" alpha="1" colorSpace="calibratedRGB"/>
-                                <items>
-                                    <tabBarItem tag="1" title="Camera" image="Chats.png" id="hhF-07-O9b"/>
-                                    <tabBarItem tag="2" title="Settings" image="Gear.png" id="DTP-TU-mbQ"/>
-                                </items>
-                                <color key="tintColor" red="0.13662967800280332" green="0.16774001870331767" blue="0.33264907525510201" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="barTintColor" red="0.25462596998494458" green="0.28817725031769714" blue="0.50115593112244894" alpha="1" colorSpace="calibratedRGB"/>
-                            </tabBar>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q2s-bT-7fg">
-                                <rect key="frame" x="0.0" y="21" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.1083707625" blue="0.9646444515" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="barTintColor" red="0.25462596999999998" green="0.28817725030000002" blue="0.50115593110000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <textAttributes key="titleTextAttributes">
-                                    <color key="textColor" red="0.98949737910000002" green="1" blue="0.99359702390000004" alpha="1" colorSpace="calibratedRGB"/>
-                                </textAttributes>
-                                <items>
-                                    <navigationItem title="PhotoList" id="axC-PN-4jT"/>
-                                </items>
-                            </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Calendar-Day-of-Week.png" translatesAutoresizingMaskIntoConstraints="NO" id="hQd-c0-UFo">
-                                <rect key="frame" x="8" y="29" width="28" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="xe0-UQ-4df"/>
                     <connections>
-                        <outlet property="menuTabBar" destination="JQr-RG-FtV" id="7ny-J0-img"/>
-                        <outlet property="photoListTableView" destination="QiB-qK-HNs" id="ERg-3z-yZp"/>
+                        <outlet property="photoImageView" destination="4BA-7E-Gv0" id="Dnf-Ov-ZfE"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vut-XV-g6h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bNj-Zq-gbe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1719" y="-446"/>
+            <point key="canvasLocation" x="-385" y="269"/>
+        </scene>
+        <!--Photo List Table View Controller - PhotoList-->
+        <scene sceneID="yaQ-iM-7Xt">
+            <objects>
+                <tableViewController id="TfE-i9-3qH" customClass="PhotoListTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="73" sectionHeaderHeight="22" sectionFooterHeight="22" id="LW1-0G-SCk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PhotoCell" rowHeight="73" id="H8I-uR-qqM" customClass="PhotoListCell">
+                                <rect key="frame" x="0.0" y="66" width="320" height="73"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="H8I-uR-qqM" id="dwy-PQ-gTc">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="72"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ACE-Mi-eAH">
+                                            <rect key="frame" x="0.0" y="0.0" width="72" height="72"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fukidashi3.png" translatesAutoresizingMaskIntoConstraints="NO" id="uQl-dF-Ane">
+                                            <rect key="frame" x="71" y="0.0" width="220" height="67"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tx5-CB-deW">
+                                            <rect key="frame" x="96" y="10" width="195" height="42"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="lblComment" destination="tx5-CB-deW" id="DiK-Rc-Gw0"/>
+                                    <outlet property="photoImg" destination="ACE-Mi-eAH" id="9hQ-ZM-cwr"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="PhotoList" id="jvq-DX-4W6"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lsS-0J-Xek" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-816" y="269"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Xdt-nA-7qB">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="vLc-Qw-zfI" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="nHH-tF-lF2">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.25462596999999998" green="0.28817725030000002" blue="0.50115593110000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="TfE-i9-3qH" kind="relationship" relationship="rootViewController" id="Pw5-IY-fGj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jaj-2G-Oyh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1248" y="269"/>
+        </scene>
+        <!--Photo List View Controller-->
+        <scene sceneID="T5y-5F-6qv">
+            <objects>
+                <viewController storyboardIdentifier="PhotoListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="G24-Eq-It9" customClass="PhotoListViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pYB-cH-0qD"/>
+                        <viewControllerLayoutGuide type="bottom" id="sjZ-MR-GCl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UiU-vE-eKj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qwS-mi-wJD">
+                                <rect key="frame" x="0.0" y="519" width="320" height="49"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <tabBarItem tag="1" title="Camera" image="Chats.png" id="wNi-UT-l45"/>
+                                    <tabBarItem tag="2" title="Settings" image="Gear.png" id="7Px-2u-gmG"/>
+                                </items>
+                                <color key="barTintColor" red="0.25462596999999998" green="0.28817725030000002" blue="0.50115593110000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </tabBar>
+                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8KZ-kw-AGF">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="vLc-Qw-zfI" kind="embed" id="zVv-so-pDb"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="menuTabBar" destination="qwS-mi-wJD" id="OwZ-ni-uEG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DN4-Ds-vyZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1707" y="245"/>
         </scene>
     </scenes>
     <resources>
