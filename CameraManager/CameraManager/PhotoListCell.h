@@ -11,5 +11,6 @@
 @interface PhotoListCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *photoImg;
+@property (weak, nonatomic) IBOutlet UILabel *lblComment;
 
 @end

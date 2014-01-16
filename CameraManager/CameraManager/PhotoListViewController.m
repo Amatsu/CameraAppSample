@@ -90,6 +90,12 @@
     UIImage *image = [UIImage imageWithCGImage:[[_AlAssetsArr objectAtIndex:indexPath.row] thumbnail]];
     cell.photoImg.image = image;
     
+    ALAssetRepresentation *representation = [(ALAsset*)[_AlAssetsArr objectAtIndex:indexPath.row] defaultRepresentation];
+    NSDictionary *metadataDict = [representation metadata] ;
+    cell.lblComment.text = [[metadataDict objectForKey:(NSString*)kCGImagePropertyExifDictionary] objectForKey:(NSString*)kCGImagePropertyExifUserComment];
+
+    NSLog(@"%@", [[metadataDict objectForKey:(NSString*)kCGImagePropertyExifDictionary] objectForKey:(NSString*)kCGImagePropertyExifUserComment]);
+    
     return cell;
     
 }

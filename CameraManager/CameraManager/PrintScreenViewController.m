@@ -506,12 +506,42 @@ CGPoint lastTouchPoint;
     //UIviewを画像として取得
     UIImage* img = [self convertUIImage:self.printScreenImageView];
     
+    //コメントを取得
+    NSString* cmt = @"";
+    for (NSObject *obj in self.printScreenImageView.subviews) {
+        //UIViewか？
+        if([obj isMemberOfClass:[UIView class]]){
+            UIView* markView = (UIView*)obj;
+            for (NSObject *textObj in markView.subviews) {
+                
+                //UITextFieldか？
+                if([textObj isMemberOfClass:[UITextField class]]){
+                    
+                    UITextField* markTxt = (UITextField*)textObj;
+                    cmt = [NSString stringWithFormat:@"%@ %@",cmt,markTxt.text];
+                }
+            }
+        }
+    }
+    
+    //画像のExif情報を付与して保存
+    NSMutableDictionary *metadata;
+    metadata = [[NSMutableDictionary alloc]init];
+    
+    // コメントをExif情報として設定
+    NSDictionary *exif = [NSDictionary dictionaryWithObjectsAndKeys:
+                          cmt,
+                          (NSString*)kCGImagePropertyExifUserComment,
+                          nil];
+    [metadata setObject:exif
+                 forKey:(NSString*)kCGImagePropertyExifDictionary];
+    
     //ファイル名を設定
     //[UIImage imageNamed:[NSString stringWithFormat:@"%@.jpg", [self stringWithUUID]]];
     
     //カメラロールにUIImageを保存する。保存完了後、completionBlockで「NSURL* assetURL」が取得できる
     [_library writeImageToSavedPhotosAlbum:img.CGImage
-                               orientation:(ALAssetOrientation)img.imageOrientation
+                                  metadata:metadata
                            completionBlock:^(NSURL* assetURL, NSError* error) {
                                //アルバムにALAssetを追加するメソッド
                                [self addAssetURL:assetURL

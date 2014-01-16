@@ -17,12 +17,26 @@
          contextName = "-[CameraManager observeValueForKeyPath:ofObject:change:context:]:CameraManager.m">
       </ContextState>
       <ContextState
+         contextName = "-[PrintScreenViewController saveImage:]:PrintScreenViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[self.printScreenImageView.subviews count]">
+            </PersistentString>
+            <PersistentString
+               value = "self.printScreenImageView.subviews">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[ViewController supportedInterfaceOrientations]:ViewController.m">
          <PersistentStrings>
             <PersistentString
                value = "[[UIDevice currentDevice] orientation]">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[PhotoListViewController tableView:cellForRowAtIndexPath:]:PhotoListViewController.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
