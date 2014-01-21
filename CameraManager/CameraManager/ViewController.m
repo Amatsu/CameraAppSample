@@ -162,6 +162,15 @@ float effectiveScale;
     //許可しない。
     return NO;
 }
+// ios6 サポート向き
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+// ios6 初期向き
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
 
 //タブバーコントローラーの遷移イベント
 //- (void) didSelect:(PhotoListTabBarController *)tabBarController {

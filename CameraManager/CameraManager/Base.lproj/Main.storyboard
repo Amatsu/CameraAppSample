@@ -320,6 +320,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="lblComment" destination="tx5-CB-deW" id="DiK-Rc-Gw0"/>
@@ -366,7 +367,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qwS-mi-wJD">
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qwS-mi-wJD">
                                 <rect key="frame" x="0.0" y="519" width="320" height="49"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -376,7 +377,7 @@
                                 </items>
                                 <color key="barTintColor" red="0.25462596999999998" green="0.28817725030000002" blue="0.50115593110000001" alpha="1" colorSpace="calibratedRGB"/>
                             </tabBar>
-                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8KZ-kw-AGF">
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8KZ-kw-AGF">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -386,6 +387,15 @@
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="qwS-mi-wJD" secondAttribute="trailing" id="4rc-92-ai8"/>
+                            <constraint firstAttribute="trailing" secondItem="8KZ-kw-AGF" secondAttribute="trailing" id="7fi-rP-yqP"/>
+                            <constraint firstItem="8KZ-kw-AGF" firstAttribute="top" secondItem="UiU-vE-eKj" secondAttribute="top" id="GrL-9j-kcg"/>
+                            <constraint firstAttribute="bottom" secondItem="qwS-mi-wJD" secondAttribute="bottom" id="IAl-kv-2jX"/>
+                            <constraint firstItem="8KZ-kw-AGF" firstAttribute="leading" secondItem="UiU-vE-eKj" secondAttribute="leading" id="VPG-KM-jgd"/>
+                            <constraint firstItem="qwS-mi-wJD" firstAttribute="leading" secondItem="UiU-vE-eKj" secondAttribute="leading" id="aLa-Cs-Jkr"/>
+                            <constraint firstItem="qwS-mi-wJD" firstAttribute="top" secondItem="8KZ-kw-AGF" secondAttribute="bottom" id="g4f-FY-De1"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="menuTabBar" destination="qwS-mi-wJD" id="OwZ-ni-uEG"/>

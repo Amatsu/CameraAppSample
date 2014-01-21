@@ -48,4 +48,9 @@
     }
 }
 
+// ios6 ロテート許可
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
 @end
