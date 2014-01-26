@@ -34,7 +34,24 @@ NSInteger markCnt = 0;
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    //写真を表示
     self.printScreenImageView.image = self.printScreenImage;
+    
+    //吹き出し画像を読み込み
+    NSMutableArray* imageList = [NSMutableArray array];
+    for (int i=0; ; i++) {
+        UIImage* image = [UIImage imageNamed:
+                          [NSString stringWithFormat:@"fukidashi%d.png", i+1]];
+        if (image == nil)
+            break;
+        
+        [imageList addObject:image];
+    }
+    //UIView* imageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1000, 1000)];
+    ThumbnailView* imageView = [[ThumbnailView alloc] initWithFrame:CGRectMake(0, 0, 60 * (float)imageList.count, 70)];
+    imageView.imageList = imageList;
+    self.fukidashiImgListView.contentSize = imageView.bounds.size;
+    [self.fukidashiImgListView addSubview:imageView];
     
     //タップジェスチャーを追加
     self.printScreenImageView.userInteractionEnabled = YES;

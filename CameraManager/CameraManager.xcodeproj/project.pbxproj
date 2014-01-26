@@ -28,6 +28,7 @@
 		CD9B30C1184AAC62002E47AF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9B30C0184AAC62002E47AF /* AVFoundation.framework */; };
 		CD9B30C71850A615002E47AF /* PrintScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9B30C61850A615002E47AF /* PrintScreenViewController.m */; };
 		CD9B30CC185BDF2F002E47AF /* icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD9B30CB185BDF2F002E47AF /* icon-60@2x.png */; };
+		CDAA140C1894A0B900CF1CB2 /* ThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAA140B1894A0B900CF1CB2 /* ThumbnailView.m */; };
 		CDB43EE81876FFFD00E0BF1E /* fukidashi1.png in Resources */ = {isa = PBXBuildFile; fileRef = CDB43EE61876FFFD00E0BF1E /* fukidashi1.png */; };
 		CDB43EE91876FFFD00E0BF1E /* fukidashi3.png in Resources */ = {isa = PBXBuildFile; fileRef = CDB43EE71876FFFD00E0BF1E /* fukidashi3.png */; };
 		CDB43EEC187701EB00E0BF1E /* fukidashi4.png in Resources */ = {isa = PBXBuildFile; fileRef = CDB43EEA187701EB00E0BF1E /* fukidashi4.png */; };
@@ -88,6 +89,8 @@
 		CD9B30C51850A615002E47AF /* PrintScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrintScreenViewController.h; sourceTree = "<group>"; };
 		CD9B30C61850A615002E47AF /* PrintScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrintScreenViewController.m; sourceTree = "<group>"; };
 		CD9B30CB185BDF2F002E47AF /* icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-60@2x.png"; path = "../../../../Dropbox/おきろく画像/icon-60@2x.png"; sourceTree = "<group>"; };
+		CDAA140A1894A0B900CF1CB2 /* ThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailView.h; sourceTree = "<group>"; };
+		CDAA140B1894A0B900CF1CB2 /* ThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailView.m; sourceTree = "<group>"; };
 		CDB43EE61876FFFD00E0BF1E /* fukidashi1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidashi1.png; sourceTree = "<group>"; };
 		CDB43EE71876FFFD00E0BF1E /* fukidashi3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidashi3.png; sourceTree = "<group>"; };
 		CDB43EEA187701EB00E0BF1E /* fukidashi4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidashi4.png; sourceTree = "<group>"; };
@@ -186,6 +189,8 @@
 				CDB43EE51876FFCF00E0BF1E /* fukidashi */,
 				CD9B30C51850A615002E47AF /* PrintScreenViewController.h */,
 				CD9B30C61850A615002E47AF /* PrintScreenViewController.m */,
+				CDAA140A1894A0B900CF1CB2 /* ThumbnailView.h */,
+				CDAA140B1894A0B900CF1CB2 /* ThumbnailView.m */,
 				CD9B3091184AA0D8002E47AF /* AppDelegate.h */,
 				CD9B3092184AA0D8002E47AF /* AppDelegate.m */,
 				CD9B3094184AA0D8002E47AF /* Main.storyboard */,
@@ -388,6 +393,7 @@
 				CD9B3093184AA0D8002E47AF /* AppDelegate.m in Sources */,
 				CD9B30B9184AA488002E47AF /* CameraManager.m in Sources */,
 				CDB43F121888156700E0BF1E /* PhotoListTableViewController.m in Sources */,
+				CDAA140C1894A0B900CF1CB2 /* ThumbnailView.m in Sources */,
 				CDB43EF31877B8C000E0BF1E /* PhotoListViewController.m in Sources */,
 				CDB43F0F1888091400E0BF1E /* PhotoViewController.m in Sources */,
 				CD9B30C71850A615002E47AF /* PrintScreenViewController.m in Sources */,

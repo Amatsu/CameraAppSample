@@ -10,15 +10,18 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/ImageIO.h>
 #import "PhotoListViewController.h"
+#import "ThumbnailView.h"
 
 @interface PrintScreenViewController : UIViewController{
     ALAssetsLibrary *_library;
     NSURL *_groupURL;
     NSString *_AlbumName;
     BOOL _albumWasFound;
+    ThumbnailView* _fukidasiListView;
 }
 
 @property (weak, nonatomic) UIImage* printScreenImage;
+@property (weak, nonatomic) IBOutlet UIScrollView *fukidashiImgListView;
 @property (weak, nonatomic) IBOutlet UIImageView *printScreenImageView;
 @property (weak, nonatomic) IBOutlet UIButton *btnTrash;
 

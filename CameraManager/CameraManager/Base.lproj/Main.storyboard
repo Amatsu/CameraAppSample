@@ -249,11 +249,16 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.91727431288341865" green="0.92882354214920093" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mzH-L4-MZs">
+                                <rect key="frame" x="0.0" y="348" width="320" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="btnTrash" destination="TCs-q7-88Q" id="nc8-BA-r1s"/>
+                        <outlet property="fukidashiImgListView" destination="mzH-L4-MZs" id="IL8-ho-J7W"/>
                         <outlet property="printScreenImageView" destination="SMV-1Z-fQu" id="inb-Sw-J3G"/>
                     </connections>
                 </viewController>
@@ -309,11 +314,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="72" height="72"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fukidashi3.png" translatesAutoresizingMaskIntoConstraints="NO" id="uQl-dF-Ane">
-                                            <rect key="frame" x="71" y="0.0" width="220" height="67"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fukidashi3.png" translatesAutoresizingMaskIntoConstraints="NO" id="uQl-dF-Ane">
+                                            <rect key="frame" x="74" y="0.0" width="240" height="67"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tx5-CB-deW">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tx5-CB-deW">
                                             <rect key="frame" x="96" y="10" width="195" height="42"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -321,6 +326,16 @@
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="uQl-dF-Ane" secondAttribute="trailing" constant="6" id="4ar-Gd-0Dw"/>
+                                        <constraint firstItem="uQl-dF-Ane" firstAttribute="leading" secondItem="dwy-PQ-gTc" secondAttribute="leading" constant="74" id="6B6-gJ-0Fe"/>
+                                        <constraint firstAttribute="bottom" secondItem="uQl-dF-Ane" secondAttribute="bottom" constant="5" id="Fl4-IY-oWc"/>
+                                        <constraint firstItem="tx5-CB-deW" firstAttribute="top" secondItem="dwy-PQ-gTc" secondAttribute="top" constant="10" id="ZME-iu-RPd"/>
+                                        <constraint firstAttribute="bottom" secondItem="tx5-CB-deW" secondAttribute="bottom" constant="20" id="ggn-nc-Ywp"/>
+                                        <constraint firstItem="tx5-CB-deW" firstAttribute="leading" secondItem="dwy-PQ-gTc" secondAttribute="leading" constant="96" id="hua-j4-hV8"/>
+                                        <constraint firstItem="uQl-dF-Ane" firstAttribute="top" secondItem="dwy-PQ-gTc" secondAttribute="top" id="liU-TX-owx"/>
+                                        <constraint firstAttribute="trailing" secondItem="tx5-CB-deW" secondAttribute="trailing" constant="29" id="qwS-qX-oNR"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="lblComment" destination="tx5-CB-deW" id="DiK-Rc-Gw0"/>

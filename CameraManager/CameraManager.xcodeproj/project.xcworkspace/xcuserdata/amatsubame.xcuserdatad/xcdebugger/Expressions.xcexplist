@@ -17,6 +17,14 @@
          contextName = "-[CameraManager observeValueForKeyPath:ofObject:change:context:]:CameraManager.m">
       </ContextState>
       <ContextState
+         contextName = "-[ViewController supportedInterfaceOrientations]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[[UIDevice currentDevice] orientation]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[PrintScreenViewController saveImage:]:PrintScreenViewController.m">
          <PersistentStrings>
             <PersistentString
@@ -28,18 +36,18 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[PhotoViewController viewDidLoad]:PhotoViewController.m">
+         contextName = "-[PrintScreenViewController viewDidLoad]:PrintScreenViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "imageURL">
+               value = "imageView.bounds.size">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[ViewController supportedInterfaceOrientations]:ViewController.m">
+         contextName = "-[PhotoViewController viewDidLoad]:PhotoViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "[[UIDevice currentDevice] orientation]">
+               value = "imageURL">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
