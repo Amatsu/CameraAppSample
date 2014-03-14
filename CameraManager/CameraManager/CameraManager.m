@@ -440,7 +440,7 @@ BOOL adjustingExposure;
     
     //画像の向きを調整する
     if(connection.isVideoOrientationSupported){
-        connection.videoOrientation = UIDevice.currentDevice.orientation;
+        connection.videoOrientation = (AVCaptureVideoOrientation)UIDevice.currentDevice.orientation;
     }
     
     //拡大倍率を適用

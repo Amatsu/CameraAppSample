@@ -110,7 +110,7 @@ float effectiveScale;
     PrintScreenViewController *prtScrView = [[self storyboard] instantiateViewControllerWithIdentifier:@"PrintScreenViewController"];
     
     //画面の向きを設定
-    self.cameraManager.videoOrientaion  = self.interfaceOrientation;
+    self.cameraManager.videoOrientaion  = (UIDeviceOrientation)self.interfaceOrientation;
     
     //撮影
     [self.cameraManager shotPhoto:^(UIImage *image, NSError *error) {

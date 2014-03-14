@@ -14,17 +14,19 @@
 
 @implementation PrintScreenViewController
 
-//選択中のオブジェクト名称
-NSString *choiceObjNm;
+////選択中のオブジェクト名称
+//NSString *choiceObjNm;
+//選択中の吹き出し
+UIImageView *fukidashiView;
 //選択中のマークView
 UIView *selectedMarkView;
 
-NSString *const MARK_FUKIDASHI_1 = @"MARK_FUKIDASHI_1";
-NSString *const MARK_FUKIDASHI_2 = @"MARK_FUKIDASHI_2";
-NSString *const MARK_FUKIDASHI_3 = @"MARK_FUKIDASHI_3";
-NSString *const MARK_FUKIDASHI_4 = @"MARK_FUKIDASHI_4";
-NSString *const MARK_FUKIDASHI_5 = @"MARK_FUKIDASHI_5";
-NSString *const MARK_FUKIDASHI_6 = @"MARK_FUKIDASHI_6";
+//NSString *const MARK_FUKIDASHI_1 = @"MARK_FUKIDASHI_1";
+//NSString *const MARK_FUKIDASHI_2 = @"MARK_FUKIDASHI_2";
+//NSString *const MARK_FUKIDASHI_3 = @"MARK_FUKIDASHI_3";
+//NSString *const MARK_FUKIDASHI_4 = @"MARK_FUKIDASHI_4";
+//NSString *const MARK_FUKIDASHI_5 = @"MARK_FUKIDASHI_5";
+//NSString *const MARK_FUKIDASHI_6 = @"MARK_FUKIDASHI_6";
 
 NSInteger markCnt = 0;
 
@@ -47,11 +49,14 @@ NSInteger markCnt = 0;
         
         [imageList addObject:image];
     }
-    //UIView* imageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1000, 1000)];
     ThumbnailView* imageView = [[ThumbnailView alloc] initWithFrame:CGRectMake(0, 0, 60 * (float)imageList.count, 70)];
     imageView.imageList = imageList;
     self.fukidashiImgListView.contentSize = imageView.bounds.size;
     [self.fukidashiImgListView addSubview:imageView];
+    
+    //画像選択イベントを登録
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(onFukidashiTap:) name:@"FUKIDASHI_TAP" object:nil];
     
     //タップジェスチャーを追加
     self.printScreenImageView.userInteractionEnabled = YES;
@@ -98,95 +103,58 @@ NSInteger markCnt = 0;
     
 }
 
+//吹き出しを表示
+- (void)showFukidashi:(CGFloat)x y:(CGFloat)y w:(CGFloat)w h:(CGFloat)h {
+    
+    UIView *fukidashi = [[UIView alloc] initWithFrame:CGRectMake(x,y,w,h)];
+    fukidashi.clipsToBounds = true;
+    markCnt += 1;
+    fukidashi.tag = markCnt;
+    
+    //テキストフィールド追加
+    UITextField *msg =[[UITextField alloc] initWithFrame:CGRectMake(0,
+                                                                    fukidashi.bounds.size.height / 2 - 30,
+                                                                    fukidashi.bounds.size.width ,
+                                                                    60)];
+    [msg setTextAlignment:NSTextAlignmentCenter];
+    [msg setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+    msg.returnKeyType = UIReturnKeyDone;
+    [msg setDelegate: self];
+    [fukidashi addSubview:msg];
+    
+    //背景画像を設定
+    UIImage* bgimg = fukidashiView.image;
+    UIGraphicsBeginImageContext(fukidashi.bounds.size);
+    [bgimg drawInRect:fukidashi.bounds];
+    UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
+    msg.textColor = [UIColor blackColor];
+    fukidashi.alpha  = 0.8;
+    
+    //サブビューとして追加
+    [self.printScreenImageView addSubview:fukidashi];
+    
+    //各種ジェスチャを追加
+    UITapGestureRecognizer *markTapGesture = [[UITapGestureRecognizer alloc] initWithTarget: self action: @selector(didMarkTapGesture:)];
+    [fukidashi addGestureRecognizer:markTapGesture];
+    UIPanGestureRecognizer *markPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(didMarkPanGesture:)];
+    [fukidashi addGestureRecognizer:markPanGesture];
+    
+    //選択なし
+    fukidashiView = nil;
+}
+
 #pragma mark - イベント関連
 //タッチイベント
 - (void)didTapGesture:(UITapGestureRecognizer*)sender {
-    if (choiceObjNm != nil) {
+    if (fukidashiView != nil) {
         //タッチポイントに吹き出しを貼り付け
         markCnt += 1;
         CGPoint point = [sender locationInView:sender.view];
-        UIView *fukidashi = [[UIView alloc] initWithFrame:CGRectMake(point.x,point.y,200,80)];
-        fukidashi.clipsToBounds = true;
-        fukidashi.tag = markCnt;
-        
-        //テキストフィールド追加
-        UITextField *msg =[[UITextField alloc] initWithFrame:CGRectMake(0,
-                                                                        fukidashi.bounds.size.height / 2 - 30,
-                                                                        fukidashi.bounds.size.width ,
-                                                                        60)];
-        [msg setTextAlignment:NSTextAlignmentCenter];
-        [msg setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
-        msg.returnKeyType = UIReturnKeyDone;
-        [msg setDelegate: self];
-        [fukidashi addSubview:msg];
-        
-        //選択したオブジェクトにより背景イメージと文字色を変更
-        if ([choiceObjNm isEqual: MARK_FUKIDASHI_1]){
-            UIGraphicsBeginImageContext(fukidashi.bounds.size);
-            [[UIImage imageNamed:@"fukidashi1.png"] drawInRect:fukidashi.bounds];
-            UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
-            msg.textColor = [UIColor blackColor];
-            fukidashi.alpha  = 0.8;
-        }
-        if ([choiceObjNm isEqual: MARK_FUKIDASHI_2]){
-            UIGraphicsBeginImageContext(fukidashi.bounds.size);
-            [[UIImage imageNamed:@"fukidashi2.png"] drawInRect:fukidashi.bounds];
-            UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
-            msg.textColor = [UIColor blackColor];
-            fukidashi.alpha  = 0.8;
-        }
-        if ([choiceObjNm isEqual: MARK_FUKIDASHI_3]){
-            UIGraphicsBeginImageContext(fukidashi.bounds.size);
-            [[UIImage imageNamed:@"fukidashi3.png"] drawInRect:fukidashi.bounds];
-            UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
-            msg.textColor = [UIColor blackColor];
-            fukidashi.alpha  = 0.8;
-        }
-        if ([choiceObjNm isEqual: MARK_FUKIDASHI_4]){
-            UIGraphicsBeginImageContext(fukidashi.bounds.size);
-            [[UIImage imageNamed:@"fukidashi4.png"] drawInRect:fukidashi.bounds];
-            UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
-            msg.textColor = [UIColor blackColor];
-            fukidashi.alpha  = 0.8;
-        }
-        if ([choiceObjNm isEqual: MARK_FUKIDASHI_5]){
-            UIGraphicsBeginImageContext(fukidashi.bounds.size);
-            [[UIImage imageNamed:@"fukidashi5.png"] drawInRect:fukidashi.bounds];
-            UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
-            msg.textColor = [UIColor blackColor];
-            fukidashi.alpha  = 0.8;
-        }
-        if ([choiceObjNm isEqual: MARK_FUKIDASHI_6]){
-            UIGraphicsBeginImageContext(fukidashi.bounds.size);
-            [[UIImage imageNamed:@"fukidashi6.png"] drawInRect:fukidashi.bounds];
-            UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
-            msg.textColor = [UIColor blackColor];
-            fukidashi.alpha  = 0.8;
-        }
-        
-        //サブビューとして追加
-        [self.printScreenImageView addSubview:fukidashi];
-        
-        //各種ジェスチャを追加
-        UITapGestureRecognizer *markTapGesture = [[UITapGestureRecognizer alloc] initWithTarget: self action: @selector(didMarkTapGesture:)];
-        [fukidashi addGestureRecognizer:markTapGesture];
-        UIPanGestureRecognizer *markPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(didMarkPanGesture:)];
-        [fukidashi addGestureRecognizer:markPanGesture];
-        
-        //選択なし
-        choiceObjNm = nil;
+        //吹き出しを表示
+        [self showFukidashi:point.x y:point.y w:200 h:80];
     }
 }
 
@@ -230,7 +198,7 @@ NSInteger markCnt = 0;
 CGPoint lastTouchPoint;
 - (void)didPanGesture:(UIPanGestureRecognizer*)sender {
     
-    if (choiceObjNm != nil) {
+    if (fukidashiView != nil) {
        
         //タッチ座標を取得
         CGPoint point = [sender locationInView:self.view];
@@ -239,9 +207,9 @@ CGPoint lastTouchPoint;
         if (sender.state == UIGestureRecognizerStateBegan){
             lastTouchPoint = point;
             UIView *tmpView = [[UIView alloc] initWithFrame:CGRectMake(point.x,
-                                                                         point.y,
-                                                                         fabsf([sender translationInView:sender.view].x),
-                                                                         fabsf([sender translationInView:sender.view].y))];
+                                                                       point.y,
+                                                                       fabsf([sender translationInView:sender.view].x),
+                                                                       fabsf([sender translationInView:sender.view].y))];
             [self.printScreenImageView addSubview:tmpView];
             [self selectedMarkObject:tmpView];
             
@@ -260,95 +228,8 @@ CGPoint lastTouchPoint;
             if (point.y < y)
                 y = point.y;
             
-            markCnt += 1;
-            UIView *fukidashi = [[UIView alloc] initWithFrame:CGRectMake(x,
-                                                                         y,
-                                                                         fabsf([sender translationInView:sender.view].x),
-                                                                         fabsf([sender translationInView:sender.view].y))];
-            fukidashi.clipsToBounds = true;
-            fukidashi.tag = markCnt;
-            
-            //テキストフィールド追加
-            UITextField *msg =[[UITextField alloc] initWithFrame:CGRectMake(0,
-                                                                            fukidashi.bounds.size.height / 2 - 30,
-                                                                            fukidashi.bounds.size.width ,
-                                                                            60)];
-            
-            [msg setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
-            [msg setTextAlignment:NSTextAlignmentCenter];
-            msg.returnKeyType = UIReturnKeyDone;
-            [msg setDelegate: self];
-            [fukidashi addSubview:msg];
-            
-            //選択したオブジェクトにより背景イメージと文字色を変更
-            if ([choiceObjNm isEqual: MARK_FUKIDASHI_1]){
-                UIGraphicsBeginImageContext(fukidashi.bounds.size);
-                [[UIImage imageNamed:@"fukidashi1.png"] drawInRect:fukidashi.bounds];
-                UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-                UIGraphicsEndImageContext();
-                fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
-                msg.textColor = [UIColor blackColor];
-                fukidashi.alpha  = 0.8;
-            }
-            if ([choiceObjNm isEqual: MARK_FUKIDASHI_2]){
-                UIGraphicsBeginImageContext(fukidashi.bounds.size);
-                [[UIImage imageNamed:@"fukidashi2.png"] drawInRect:fukidashi.bounds];
-                UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-                UIGraphicsEndImageContext();
-                fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
-                msg.textColor = [UIColor blackColor];
-                fukidashi.alpha  = 0.8;
-            }
-            if ([choiceObjNm isEqual: MARK_FUKIDASHI_3]){
-                UIGraphicsBeginImageContext(fukidashi.bounds.size);
-                [[UIImage imageNamed:@"fukidashi3.png"] drawInRect:fukidashi.bounds];
-                UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-                UIGraphicsEndImageContext();
-                fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
-                msg.textColor = [UIColor blackColor];
-                fukidashi.alpha  = 0.8;
-            }
-            if ([choiceObjNm isEqual: MARK_FUKIDASHI_4]){
-                UIGraphicsBeginImageContext(fukidashi.bounds.size);
-                [[UIImage imageNamed:@"fukidashi4.png"] drawInRect:fukidashi.bounds];
-                UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-                UIGraphicsEndImageContext();
-                fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
-                msg.textColor = [UIColor blackColor];
-                fukidashi.alpha  = 0.8;
-            }
-            if ([choiceObjNm isEqual: MARK_FUKIDASHI_5]){
-                UIGraphicsBeginImageContext(fukidashi.bounds.size);
-                [[UIImage imageNamed:@"fukidashi5.png"] drawInRect:fukidashi.bounds];
-                UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-                UIGraphicsEndImageContext();
-                fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
-                msg.textColor = [UIColor blackColor];
-                fukidashi.alpha  = 0.8;
-            }
-            if ([choiceObjNm isEqual: MARK_FUKIDASHI_6]){
-                UIGraphicsBeginImageContext(fukidashi.bounds.size);
-                [[UIImage imageNamed:@"fukidashi6.png"] drawInRect:fukidashi.bounds];
-                UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-                UIGraphicsEndImageContext();
-                fukidashi.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
-                msg.textColor = [UIColor blackColor];
-                fukidashi.alpha  = 0.8;
-            }
-            
-            //サブビューとして追加
-            [self.printScreenImageView addSubview:fukidashi];
-            
-            //各種ジェスチャを追加
-            UITapGestureRecognizer *markTapGesture = [[UITapGestureRecognizer alloc] initWithTarget: self action: @selector(didMarkTapGesture:)];
-            [fukidashi addGestureRecognizer:markTapGesture];
-            UIPanGestureRecognizer *markPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(didMarkPanGesture:)];
-            [fukidashi addGestureRecognizer:markPanGesture];
-            
-            //選択中オブジェクトに設定
-            [self selectedMarkObject:fukidashi];
-            //選択なし
-            choiceObjNm = nil;
+            //吹き出しを表示
+            [self showFukidashi:x y:y w:fabsf([sender translationInView:sender.view].x) h:fabsf([sender translationInView:sender.view].y)];
             
         } else {
             //吹き出しの設置座業を算出
@@ -401,27 +282,6 @@ CGPoint lastTouchPoint;
 
         //変化した値分回転
         selectedMarkView.transform = CGAffineTransformRotate(selectedMarkView.transform,rotation);
-
-        //    float x1 = point.x - markPoint.x;
-        //    float y1 = -(point.y - markPoint.y);
-        //    
-        //    float x2 = lastTouchPoint.x - markPoint.x;
-        //    float y2 = -(lastTouchPoint.y - markPoint.y);
-        //    
-        //    // 距離rを求める
-        //    float r1 = sqrt((x1 * x1) + (y1 * y1));
-        //    float r2 = sqrt((x2 * x2) + (y2 * y2));
-        //    //NSLog(@"距離：%f", r);
-        //    
-        //    float scale;
-        //    if (r1 >= r2)
-        //        scale = 1.01;
-        //    else
-        //        scale = 0.99;
-        //
-        //    
-        //    //変化した値分拡大
-        //    selectedMarkView.transform = CGAffineTransformScale(selectedMarkView.transform, scale, scale);
 
         //最終タッチ座標を保持
         lastTouchPoint = point;
@@ -655,31 +515,50 @@ CGPoint lastTouchPoint;
 //}
 
 
-#pragma mark - 吹出関連
-- (IBAction)choiceFukidashi1:(id)sender {
-    choiceObjNm = MARK_FUKIDASHI_1;
+//#pragma mark - 吹出関連
+//- (IBAction)choiceFukidashi1:(id)sender {
+//    choiceObjNm = MARK_FUKIDASHI_1;
+//}
+//
+//- (IBAction)choiceFukidashi2:(id)sender {
+//    choiceObjNm = MARK_FUKIDASHI_2;
+//}
+//
+//- (IBAction)choiceFukidashi3:(id)sender {
+//    choiceObjNm = MARK_FUKIDASHI_3;
+//}
+//
+//- (IBAction)choiceFukidashi4:(id)sender {
+//    choiceObjNm = MARK_FUKIDASHI_4;
+//}
+//
+//- (IBAction)choiceFukidashi5:(id)sender {
+//    choiceObjNm = MARK_FUKIDASHI_5;
+//}
+//
+//- (IBAction)choiceFukidashi6:(id)sender {
+//    choiceObjNm = MARK_FUKIDASHI_6;
+//}
+
+
+# pragma mark - ScrollView Touch Events
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    CGPoint locationPoint = [[touches anyObject] locationInView:self.view];
+    NSLog(@"touchesBegan = %lf,%lf\n", locationPoint.x, locationPoint.y);
 }
 
-- (IBAction)choiceFukidashi2:(id)sender {
-    choiceObjNm = MARK_FUKIDASHI_2;
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    CGPoint locationPoint = [[touches anyObject] locationInView:self.view];
+    NSLog(@"touchesEnded = %lf,%lf\n", locationPoint.x, locationPoint.y);
 }
 
-- (IBAction)choiceFukidashi3:(id)sender {
-    choiceObjNm = MARK_FUKIDASHI_3;
+// 通知と値を受けるhogeメソッド
+-(void)onFukidashiTap:(NSNotification *)notification{
+    // 通知の送信側から送られた値を取得する
+    UIImageView *iv = (UIImageView *)[notification object];
+    fukidashiView = iv;
 }
-
-- (IBAction)choiceFukidashi4:(id)sender {
-    choiceObjNm = MARK_FUKIDASHI_4;
-}
-
-- (IBAction)choiceFukidashi5:(id)sender {
-    choiceObjNm = MARK_FUKIDASHI_5;
-}
-
-- (IBAction)choiceFukidashi6:(id)sender {
-    choiceObjNm = MARK_FUKIDASHI_6;
-}
-
 /*
  * 画面回転可否
  */

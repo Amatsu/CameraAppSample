@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="G24-Eq-It9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="G24-Eq-It9">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--View Controller - Item-->
@@ -172,85 +172,8 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.082893437626733943" green="0.10795256009833792" blue="0.24426020408163263" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AR7-hO-rxC">
-                                <rect key="frame" x="0.0" y="426" width="320" height="63"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pat-hC-OQh">
-                                        <rect key="frame" x="6" y="13" width="44" height="38"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.88546620239999996" green="0.3796470099" blue="0.43194406010000003" alpha="0.0" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="HiraKakuProN-W6" family="Hiragino Kaku Gothic ProN" pointSize="15"/>
-                                        <state key="normal" backgroundImage="fukidashi1.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="choiceFukidashi1:" destination="XuK-Zm-g9k" eventType="touchUpInside" id="GsW-Br-zfm"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" alpha="0.89999997615814209" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t9n-g5-Iu0">
-                                        <rect key="frame" x="58" y="12" width="44" height="39"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.88546620239999996" green="0.3796470099" blue="0.43194406010000003" alpha="0.0" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="HiraKakuProN-W6" family="Hiragino Kaku Gothic ProN" pointSize="15"/>
-                                        <state key="normal" backgroundImage="fukidashi2.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="choiceFukidashi2:" destination="XuK-Zm-g9k" eventType="touchUpInside" id="GOY-5v-RYN"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" alpha="0.89999997615814209" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whV-tu-sb0">
-                                        <rect key="frame" x="217" y="13" width="44" height="39"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.88546620239999996" green="0.3796470099" blue="0.43194406010000003" alpha="0.0" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="HiraKakuProN-W6" family="Hiragino Kaku Gothic ProN" pointSize="15"/>
-                                        <state key="normal" backgroundImage="fukidashi4.png">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="choiceFukidashi4:" destination="XuK-Zm-g9k" eventType="touchUpInside" id="Hrl-tC-vna"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NMe-AA-pJG">
-                                        <rect key="frame" x="269" y="10" width="47" height="46"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <size key="titleShadowOffset" width="0.5" height="0.5"/>
-                                        <state key="normal" backgroundImage="fukidashi5.png">
-                                            <color key="titleColor" red="0.98863636363636365" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" red="0.78890306122448983" green="0.64330034161074778" blue="0.6766242025089082" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="choiceFukidashi5:" destination="XuK-Zm-g9k" eventType="touchUpInside" id="XtK-1T-jwe"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UHq-F2-CWE">
-                                        <rect key="frame" x="110" y="13" width="47" height="46"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <size key="titleShadowOffset" width="0.5" height="0.5"/>
-                                        <state key="normal" backgroundImage="fukidashi6.png">
-                                            <color key="titleColor" red="0.98863636363636365" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" red="0.78890306122448983" green="0.64330034161074778" blue="0.6766242025089082" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="choiceFukidashi6:" destination="XuK-Zm-g9k" eventType="touchUpInside" id="iPE-oh-cuf"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fx0-VH-KI9">
-                                        <rect key="frame" x="165" y="14" width="44" height="39"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" backgroundImage="fukidashi3.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="choiceFukidashi3:" destination="XuK-Zm-g9k" eventType="touchUpInside" id="Oqm-2M-MKL"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.91727431288341865" green="0.92882354214920093" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mzH-L4-MZs">
-                                <rect key="frame" x="0.0" y="348" width="320" height="70"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mzH-L4-MZs" customClass="TouchScrollView">
+                                <rect key="frame" x="0.0" y="427" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </scrollView>
                         </subviews>
@@ -388,6 +311,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <items>
                                     <tabBarItem tag="1" title="Camera" image="Chats.png" id="wNi-UT-l45"/>
+                                    <tabBarItem tag="2" title="Photo" image="Crop.png" id="y2t-NK-g4t"/>
                                     <tabBarItem tag="2" title="Settings" image="Gear.png" id="7Px-2u-gmG"/>
                                 </items>
                                 <color key="barTintColor" red="0.25462596999999998" green="0.28817725030000002" blue="0.50115593110000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -425,13 +349,9 @@
         <image name="Brightness.png" width="30" height="30"/>
         <image name="Calendar-Day-of-Week.png" width="30" height="30"/>
         <image name="Chats.png" width="30" height="30"/>
+        <image name="Crop.png" width="30" height="30"/>
         <image name="Gear.png" width="30" height="30"/>
-        <image name="fukidashi1.png" width="300" height="249"/>
-        <image name="fukidashi2.png" width="300" height="298"/>
         <image name="fukidashi3.png" width="300" height="158"/>
-        <image name="fukidashi4.png" width="300" height="285"/>
-        <image name="fukidashi5.png" width="214" height="144"/>
-        <image name="fukidashi6.png" width="300" height="158"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

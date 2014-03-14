@@ -29,6 +29,7 @@
 		CD9B30C71850A615002E47AF /* PrintScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9B30C61850A615002E47AF /* PrintScreenViewController.m */; };
 		CD9B30CC185BDF2F002E47AF /* icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD9B30CB185BDF2F002E47AF /* icon-60@2x.png */; };
 		CDAA140C1894A0B900CF1CB2 /* ThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAA140B1894A0B900CF1CB2 /* ThumbnailView.m */; };
+		CDB2D3AC18BCB0D300E4D8DB /* TouchScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB2D3AB18BCB0D300E4D8DB /* TouchScrollView.m */; };
 		CDB43EE81876FFFD00E0BF1E /* fukidashi1.png in Resources */ = {isa = PBXBuildFile; fileRef = CDB43EE61876FFFD00E0BF1E /* fukidashi1.png */; };
 		CDB43EE91876FFFD00E0BF1E /* fukidashi3.png in Resources */ = {isa = PBXBuildFile; fileRef = CDB43EE71876FFFD00E0BF1E /* fukidashi3.png */; };
 		CDB43EEC187701EB00E0BF1E /* fukidashi4.png in Resources */ = {isa = PBXBuildFile; fileRef = CDB43EEA187701EB00E0BF1E /* fukidashi4.png */; };
@@ -91,6 +92,8 @@
 		CD9B30CB185BDF2F002E47AF /* icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-60@2x.png"; path = "../../../../Dropbox/おきろく画像/icon-60@2x.png"; sourceTree = "<group>"; };
 		CDAA140A1894A0B900CF1CB2 /* ThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailView.h; sourceTree = "<group>"; };
 		CDAA140B1894A0B900CF1CB2 /* ThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailView.m; sourceTree = "<group>"; };
+		CDB2D3AA18BCB0D300E4D8DB /* TouchScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchScrollView.h; sourceTree = "<group>"; };
+		CDB2D3AB18BCB0D300E4D8DB /* TouchScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchScrollView.m; sourceTree = "<group>"; };
 		CDB43EE61876FFFD00E0BF1E /* fukidashi1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidashi1.png; sourceTree = "<group>"; };
 		CDB43EE71876FFFD00E0BF1E /* fukidashi3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidashi3.png; sourceTree = "<group>"; };
 		CDB43EEA187701EB00E0BF1E /* fukidashi4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidashi4.png; sourceTree = "<group>"; };
@@ -208,6 +211,8 @@
 				CDB43F0E1888091400E0BF1E /* PhotoViewController.m */,
 				CDB43F101888156700E0BF1E /* PhotoListTableViewController.h */,
 				CDB43F111888156700E0BF1E /* PhotoListTableViewController.m */,
+				CDB2D3AA18BCB0D300E4D8DB /* TouchScrollView.h */,
+				CDB2D3AB18BCB0D300E4D8DB /* TouchScrollView.m */,
 			);
 			path = CameraManager;
 			sourceTree = "<group>";
@@ -321,7 +326,7 @@
 		CD9B3077184AA0D8002E47AF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Amatsu;
 				TargetAttributes = {
 					CD9B309F184AA0D8002E47AF = {
@@ -393,6 +398,7 @@
 				CD9B3093184AA0D8002E47AF /* AppDelegate.m in Sources */,
 				CD9B30B9184AA488002E47AF /* CameraManager.m in Sources */,
 				CDB43F121888156700E0BF1E /* PhotoListTableViewController.m in Sources */,
+				CDB2D3AC18BCB0D300E4D8DB /* TouchScrollView.m in Sources */,
 				CDAA140C1894A0B900CF1CB2 /* ThumbnailView.m in Sources */,
 				CDB43EF31877B8C000E0BF1E /* PhotoListViewController.m in Sources */,
 				CDB43F0F1888091400E0BF1E /* PhotoViewController.m in Sources */,
@@ -451,7 +457,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -490,7 +495,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -550,7 +554,6 @@
 		CD9B30B5184AA0D8002E47AF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CameraManager.app/CameraManager";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -573,7 +576,6 @@
 		CD9B30B6184AA0D8002E47AF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CameraManager.app/CameraManager";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
